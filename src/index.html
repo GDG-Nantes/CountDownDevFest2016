@@ -2,13 +2,31 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Document</title>
+    <title>Compte à rebours</title>
+    <link rel="stylesheet" type="text/css" href="css/phone.css">
+    
+    <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
+    <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
 </head>
 <body>
 
-    <canvas id="canvasDraw"></canvas>
-    
+     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row">
+                <!-- Title -->
+                <img src="./assets/img/lego_painter_128.png">
+                <span class="mdl-layout-title">Legonnary</span>
 
+            </div>
+        </header>
+        <div class="mdl-layout__content">
+            <div class="page-content">
+                <canvas id="canvasDraw"></canvas>
+            </div>
+        </div>
+     </div>
     <script src="./bundle_phone.js"></script>
 </body>
 </html>
