@@ -1,2 +1,8 @@
 # Google App Engine generated folder
 appengine-generated/
+
+dist/
+src/css/
+node_modules/
+
+bundle*

@@ -1,0 +1,33 @@
+{
+  "name": "count-down-devfest-2016",
+  "version": "1.0.0",
+  "description": "Count down of DevFest 2016",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/GDG-Nantes/CountDownDevFest2016.git"
+  },
+  "keywords": [
+    "countdown",
+    "devfest"
+  ],
+  "author": "jefBinomed",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/GDG-Nantes/CountDownDevFest2016/issues"
+  },
+  "homepage": "https://github.com/GDG-Nantes/CountDownDevFest2016#readme",
+  "devDependencies": {
+    "babelify": "^7.3.0",
+    "browser-sync": "^2.14.0",
+    "browserify": "^11.2.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "gulp-sourcemaps": "^1.6.0",
+    "gulp-util": "^3.0.7",
+    "vinyl-source-stream": "^1.0.0"
+  }
+}
