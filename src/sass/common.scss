@@ -22,7 +22,12 @@ html, body{
         flex:1; 
         justify-content: center;
         flex-direction: column;
+        position:relative;
                 
                 
     }
+}
+
+.center{
+    text-align: center;
 }

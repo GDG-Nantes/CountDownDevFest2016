@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.1.3/material.indigo-pink.min.css">
     <script defer src="https://code.getmdl.io/1.1.3/material.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
 </head>
 <body>
 
@@ -23,6 +26,10 @@
         </header>
         <div class="mdl-layout__content">
             <div class="page-content">
+                <span class="mdl-layout-title center">Choississez votre pièce et votre couleur</span>
+                <button id="color-picker" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                    <i class="material-icons">color_lens</i>
+                </button>
                 <canvas id="canvasDraw"></canvas>
             </div>
         </div>
