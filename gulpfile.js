@@ -13,6 +13,8 @@ var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var reload = browserSync.reload;
 
+var extensions = ['.js','.json','.es6'];
+
 gulp.task('watch',['browserify', 'sass'], function(){
   browserSync.init({
      server:'./src'
@@ -37,7 +39,7 @@ gulp.task('sass',function(){
 gulp.task('browserify', ['browserify_phone', 'browserify_moderator', 'browserify_screen']);
 
 gulp.task('browserify_phone',function(){
-  return browserify(['./src/scripts/app_phone.js'], {debug:true})
+  return browserify({entries: './src/scripts/app_phone.js', debug:true, extensions: extensions})
     .transform(babelify)
     .on('error', gutil.log)    
     .bundle()    
@@ -47,7 +49,7 @@ gulp.task('browserify_phone',function(){
 });
 
 gulp.task('browserify_moderator',function(){
-  return browserify(['./src/scripts/app_moderator.js'], {debug:true})
+  return browserify({entries: './src/scripts/app_moderator.js', debug:true, extensions: extensions})
     .transform(babelify)
     .on('error', gutil.log)    
     .bundle()    
