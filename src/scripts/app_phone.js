@@ -1,5 +1,6 @@
 'use strict'
 import {Peg} from './lego_shape/peg.js';
+import {legoColors, legoBaseColor} from './common/legoColors.js';
 
 (function () {
 
@@ -11,10 +12,10 @@ import {Peg} from './lego_shape/peg.js';
             square : null,
             rect : null
         },
-        brickModel = {},
+        brickModel = {}, 
         createNewBrick = false,
         currentBrick = null,
-        lastColor = "#faa";
+        lastColor = legoBaseColor();
 
     
 
@@ -25,7 +26,7 @@ import {Peg} from './lego_shape/peg.js';
 
     function pageLoad() {
 
-        let canvasElt = document.getElementById('canvasDraw');
+        let canvasElt = document.getElementById('canvasDraw'); 
         canvasRect = canvasElt.getBoundingClientRect();
         canvasElt.width = canvasRect.width;
         canvasElt.height = canvasRect.width + HEADER_HEIGHT;
@@ -35,17 +36,13 @@ import {Peg} from './lego_shape/peg.js';
        
 
         canvas = new fabric.Canvas('canvasDraw', { selection: false });
-
-
-
-        //document.getElementById('color-picker').style.top = (canvasRect.top - 40)+'px';
+        document.getElementById('color-picker').style['background-color'] = legoBaseColor();
 
         $("#color-picker").spectrum({
-            color: "#f00",
-            move: function (tinycolor) { console.log('move', tinycolor) },
-            show: function (tinycolor) { console.log('show', tinycolor) },
-            hide: function (tinycolor) { console.log('hide', tinycolor) },
-            beforeShow: function (tinycolor) { console.log('beforeShow', tinycolor) },
+            showPaletteOnly: true,
+            showPalette:true,
+            color: legoBaseColor(),
+            palette: legoColors(),
             change: function (color) {
                 lastColor = color.toHexString();
                 if (currentBrick){
@@ -108,7 +105,6 @@ import {Peg} from './lego_shape/peg.js';
         });
 
         canvas.on('object:rotating', (options) =>{
-           console.debug(options.target);
            if ((options.target.angle > 0 && options.target.angle < 45)
             ||(options.target.angle < 360 && options.target.angle >= 315)){
                 options.target.set({
