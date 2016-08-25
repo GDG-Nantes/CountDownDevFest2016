@@ -2,10 +2,10 @@
 import {ColorLuminance} from '../common/util.js';
 
 export class Circle{
-    constructor(cellSize){
+    constructor(cellSize, color){
         this.circleBasic = new fabric.Circle({
             radius: (cellSize / 2) - 5,
-            fill: ColorLuminance('#faa', -0.1),
+            fill: ColorLuminance(color, -0.1),
             originX: 'center',
             originY: 'center'
 
@@ -13,7 +13,7 @@ export class Circle{
 
         this.circleBasicEtx = new fabric.Circle({
             radius: (cellSize / 2) - 4,
-            fill: ColorLuminance('#faa', 0.1),
+            fill: ColorLuminance(color, 0.1),
             originX: 'center',
             originY: 'center'
 
@@ -21,7 +21,7 @@ export class Circle{
 
         this.text = new fabric.Text('GDG', {
             fontSize: cellSize / 5,
-            fill: ColorLuminance('#faa', -0.5),
+            fill: ColorLuminance(color, -0.5),
             originX: 'center',
             originY: 'center'
         });

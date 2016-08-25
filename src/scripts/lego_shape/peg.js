@@ -2,24 +2,27 @@
 import {Circle} from './circle.js';
 
 export class Peg{
-    constructor(size, cellSize, left){
+    constructor(size, cellSize, color, left){
         this.size = size;
+        this.id = `Peg${size}-${Date.now()}`;
+        this.isReplace = false;
 
 
         this.rectBasic = new fabric.Rect({
             width: cellSize * size,
             height: cellSize,
-            fill: '#faa',
+            fill: color,
             originX: 'center',
             originY: 'center',
             centeredRotation: true,
-            hasControls: false
+            hasControls: false                        
         });
 
-        this.circleGroup = new Circle(cellSize);
+
+        this.circleGroup = new Circle(cellSize, color);
         let arrayElts = [this.rectBasic];
         if (size === 2){
-            this.circleGroup2 = new Circle(cellSize);
+            this.circleGroup2 = new Circle(cellSize, color);
             this.circleGroup.canvasElt.set({
                 left: -cellSize + 5
             });
@@ -36,13 +39,24 @@ export class Peg{
         this.group = new fabric.Group(arrayElts, {
             left: left,
             top: cellSize,
+            lockRotation : this.size === 1,
+            lockScalingX : true,
+            lockScalingY : true,
         });
 
-        this.group.parentPeg = this;
+        this.group.parentPeg = this;        
     }
 
     get canvasElt(){
         return this.group;
+    }
+
+    get replace(){
+        return this.isReplace
+    }
+
+    set replace(replace){
+        this.isReplace = replace;
     }
 
     changeColor(color){

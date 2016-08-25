@@ -7,9 +7,14 @@ import {Peg} from './lego_shape/peg.js';
         context = null,
         canvasRect = null,
         cellSize = 0,
+        rowSelect = {
+            square : null,
+            rect : null
+        },
         brickModel = {},
         createNewBrick = false,
-        currentBrick = null;
+        currentBrick = null,
+        lastColor = "#faa";
 
     
 
@@ -42,9 +47,12 @@ import {Peg} from './lego_shape/peg.js';
             hide: function (tinycolor) { console.log('hide', tinycolor) },
             beforeShow: function (tinycolor) { console.log('beforeShow', tinycolor) },
             change: function (color) {
-                console.log('change', color.toHexString())
-                //currentBrick.set('fill', color.toHexString());
-                currentBrick.parentPeg.changeColor(color.toHexString());
+                lastColor = color.toHexString();
+                if (currentBrick){
+                    currentBrick.parentPeg.changeColor(color.toHexString());
+                }
+                rowSelect.square.changeColor(color.toHexString());
+                rowSelect.rect.changeColor(color.toHexString());
                 canvas.renderAll();
                 document.getElementById('color-picker').style['background-color'] = color.toHexString(); // #ff0000
             }
@@ -55,8 +63,12 @@ import {Peg} from './lego_shape/peg.js';
         //window.requestAnimationFrame(drawCanvas);
         drawCanvas();
 
-        canvas.on('object:moving', function (options) {
-            currentBrick = options.target;
+        canvas.on('object:selected', (options) => currentBrick = options.target);
+        canvas.on('selection:cleared', (options) => currentBrick = null);
+
+        canvas.on('object:moving', (options) => {
+
+            let peg = options.target.parentPeg;
 
             if (options.target.top < 0) {
                 options.target.set({
@@ -79,11 +91,42 @@ import {Peg} from './lego_shape/peg.js';
                     top: Math.round((options.target.top - HEADER_HEIGHT) / cellSize) * cellSize + HEADER_HEIGHT
                 });
             } else {
+                 
+                if (!peg.replace){
+                    if (peg.size === 2){                        
+                        canvas.add(createRect().canvasElt);                        
+                    }else{
+                        canvas.add(createSquare().canvasElt);
+                    }
+                    peg.replace = true;
+                }
                 options.target.set({
                     left: Math.round(options.target.left / cellSize) * cellSize,
                     top: Math.round((options.target.top - HEADER_HEIGHT) / cellSize) * cellSize + HEADER_HEIGHT
                 });
             }
+        });
+
+        canvas.on('object:rotating', (options) =>{
+           console.debug(options.target);
+           if ((options.target.angle > 0 && options.target.angle < 45)
+            ||(options.target.angle < 360 && options.target.angle >= 315)){
+                options.target.set({
+                    angle:0
+                });
+           }else if (options.target.angle >= 45 && options.target.angle < 135){
+                options.target.set({
+                    angle:90
+                });
+           }else if (options.target.angle >= 135 && options.target.angle < 225){
+                options.target.set({
+                    angle:180
+                });
+           }else if (options.target.angle >= 225 && options.target.angle < 315){
+                options.target.set({
+                    angle:270
+                });
+           }
         });
     }
 
@@ -98,29 +141,31 @@ import {Peg} from './lego_shape/peg.js';
             canvas.add(new fabric.Line([0, i * cellSize + HEADER_HEIGHT, maxSize, i * cellSize + HEADER_HEIGHT], { stroke: '#ccc', selectable: false }));
         }
 
+        canvas.add(
+            createSquare().canvasElt
+            , createRect().canvasElt
+            );
 
 
-        let rectBasic = new fabric.Rect({
-            left: (canvasRect.width / 2) - cellSize,
-            top: cellSize,
-            width: cellSize * 2,
-            height: cellSize,
-            fill: '#faa',
-            originX: 'left',
-            originY: 'top',
-            centeredRotation: true,
-            hasControls: false
-        });
+    }
 
-        
-        let peg = new Peg(1, cellSize, (canvasRect.width / 2) - (3 * cellSize));
+    function createRect(){
+        return _createBrick(2, (canvasRect.width / 2) + 2 * cellSize);
+    }
 
-        let pegRect = new Peg(2, cellSize, (canvasRect.width / 2) + 2 * cellSize);
+    function createSquare(){
+        return _createBrick(1, (canvasRect.width / 2) - (1 * cellSize));
+    }
 
-        
-        canvas.add(rectBasic, peg.canvasElt, pegRect.canvasElt);
-
-
+    function _createBrick(size, position){
+        let peg = new Peg(size, cellSize, lastColor, position);
+        brickModel[peg.id] = peg;
+        if (size == 1){
+            rowSelect.square = peg;
+        }else{
+            rowSelect.rect = peg;
+        }
+        return peg;
     }
 
     
