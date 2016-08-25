@@ -23,7 +23,9 @@ export class Circle{
             fontSize: cellSize / 5,
             fill: ColorLuminance(color, -0.5),
             originX: 'center',
-            originY: 'center'
+            originY: 'center',
+            stroke: ColorLuminance(color, -0.7),
+            strokeWidth: 1
         });
 
         this.group = new fabric.Group([this.circleBasicEtx, this.circleBasic, this.text]);

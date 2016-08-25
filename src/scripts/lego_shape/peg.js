@@ -42,6 +42,7 @@ export class Peg{
             lockRotation : this.size === 1,
             lockScalingX : true,
             lockScalingY : true,
+            hasControls : this.size != 1,
         });
 
         this.group.parentPeg = this;        

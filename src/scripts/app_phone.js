@@ -26,7 +26,7 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
 
     function pageLoad() {
 
-        let canvasElt = document.getElementById('canvasDraw'); 
+        let canvasElt = document.getElementById('canvasDraw');  
         canvasRect = canvasElt.getBoundingClientRect();
         canvasElt.width = canvasRect.width;
         canvasElt.height = canvasRect.width + HEADER_HEIGHT;
@@ -36,9 +36,8 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
        
 
         canvas = new fabric.Canvas('canvasDraw', { selection: false });
-        document.getElementById('color-picker').style['background-color'] = legoBaseColor();
 
-        $("#color-picker").spectrum({
+        $("#color-picker2").spectrum({
             showPaletteOnly: true,
             showPalette:true,
             color: legoBaseColor(),
@@ -51,13 +50,11 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
                 rowSelect.square.changeColor(color.toHexString());
                 rowSelect.rect.changeColor(color.toHexString());
                 canvas.renderAll();
-                document.getElementById('color-picker').style['background-color'] = color.toHexString(); // #ff0000
             }
         });
         // snap to grid
 
 
-        //window.requestAnimationFrame(drawCanvas);
         drawCanvas();
 
         canvas.on('object:selected', (options) => currentBrick = options.target);
