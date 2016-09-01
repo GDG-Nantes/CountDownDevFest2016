@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Compte à rebours</title>
     <link rel="stylesheet" type="text/css" href="css/phone.css">
-    
+
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="https://code.getmdl.io/1.2.0/material.yellow-indigo.min.css" />
@@ -13,32 +14,52 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.0/spectrum.min.css">
 </head>
+
 <body>
 
-     <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
                 <img src="./assets/img/lego_painter_128.png">
                 <span class="mdl-layout-title">Legonnary</span>
                 <div class="mdl-layout-spacer"></div>
-                
+
                 <nav class="mdl-navigation">
-                    <a id="color-picker2" class="mdl-navigation__link" href=""><i class="material-icons">color_lens</i></a>
+                    <a id="color-picker2" class="mdl-navigation__link" href="" hidden><i class="material-icons">color_lens</i></a>
+                    <a id="help" class="mdl-navigation__link" href="" hidden><i class="material-icons">help</i></a>
                 </nav>
             </div>
         </header>
         <div class="mdl-layout__content">
             <div class="page-content">
-                <span class="mdl-layout-title center">Choississez votre pièce et votre couleur</span>
-                <!--<button id="color-picker" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
+                <div id="hello-msg" class="demo-card-wide mdl-card mdl-shadow--2dp">
+                     <div class="mdl-card__title">
+                        <h2 class="mdl-card__title-text">Comment Jouer ?</h2>
+                    </div>
+                    <div class="mdl-card__supporting-text">
+                        Choississez votre pièce et votre couleur à l'aide du bouton de palette dans la barre de menu. Positionnez ensuite votre pièce sur la grille. Quand votre dessin est terminé, cliquez sur le bouton valider
+                    </div>
+                    <div class="mdl-card__actions mdl-card--border">
+                        <button id="startBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
+                            Démarrer <i class="material-icons">brush</i>
+                        </button>
+                    </div>
+                </div>
+                <div id="game" hidden>
+                    <!--<button id="color-picker" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
                     <i class="material-icons">color_lens</i>
                 </button>-->
-                <canvas id="canvasDraw"></canvas>
+                    <canvas id="canvasDraw"></canvas>
+                    <button id="btnSubmission" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
+                    Soumettre
+                    </button>
+                </div>
             </div>
         </div>
-     </div>
+    </div>
     <script src="https://rawgit.com/kangax/fabric.js/master/dist/fabric.js"></script>
     <script src="./bundle_phone.js"></script>
 </body>
+
 </html>

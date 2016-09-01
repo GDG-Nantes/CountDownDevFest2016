@@ -10,3 +10,16 @@ canvas{
     right:10px;
     top:50px;
 }
+
+#hello-msg{
+    align-self: center;
+}
+
+#game{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    flex-direction: column;
+    position: relative;
+}
+

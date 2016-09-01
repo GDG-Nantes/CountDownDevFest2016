@@ -15,7 +15,8 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
         brickModel = {}, 
         createNewBrick = false,
         currentBrick = null,
-        lastColor = legoBaseColor();
+        lastColor = legoBaseColor(),
+        gameInit = false;
 
     
 
@@ -23,9 +24,7 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
         HEADER_HEIGHT = 100;
 
 
-
-    function pageLoad() {
-
+    function initGame(){
         let canvasElt = document.getElementById('canvasDraw');  
         canvasRect = canvasElt.getBoundingClientRect();
         canvasElt.width = canvasRect.width;
@@ -121,6 +120,32 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
                 });
            }
         });
+    }
+
+    function pageLoad() {
+
+        document.getElementById('startBtn').addEventListener('click', ()=>{
+            document.getElementById('hello-msg').setAttribute("hidden","");
+            document.getElementById('game').removeAttribute('hidden');
+            document.getElementById('color-picker2').removeAttribute('hidden');
+            document.getElementById('help').removeAttribute('hidden');
+
+            if (!gameInit){
+                gameInit = true;
+                initGame();
+            }
+        });
+
+        document.getElementById('help').addEventListener('click', ()=>{
+            document.getElementById('hello-msg').removeAttribute("hidden");
+            document.getElementById('game').setAttribute('hidden',"");
+            document.getElementById('color-picker2').setAttribute('hidden',"");
+            document.getElementById('help').setAttribute('hidden',"");
+
+        });
+
+
+        
     }
 
     function drawGrid(size) {
