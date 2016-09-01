@@ -6,6 +6,7 @@ export class Peg{
         this.size = size;
         this.id = `Peg${size}-${Date.now()}`;
         this.isReplace = false;
+        this.toRemove = false;
 
 
         this.rectBasic = new fabric.Rect({

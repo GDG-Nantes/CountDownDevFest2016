@@ -32,29 +32,15 @@ export class LegoGridCanvas{
 
             let peg = options.target.parentPeg;
 
-            if (options.target.top < 0) {
-                options.target.set({
-                    left: Math.round(options.target.left / this.cellSize) * this.cellSize,
-                    top: 1
-                });
-            } else if (options.target.left < 0) {
-                options.target.set({
-                    left: 1,
-                    top: Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT
-                });
-            } else if (options.target.top + this.cellSize > this.canvasElt.height) {
-                options.target.set({
-                    left: Math.round(options.target.left / this.cellSize) * this.cellSize,
-                    top: this.canvasElt.height - this.cellSize - 1
-                });
-            } else if (options.target.left + this.cellSize > this.canvasElt.width) {
-                options.target.set({
-                    left: this.canvasElt.width - this.cellSize - 1,
-                    top: Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT
-                });
-            } else {
-                 
-                if (!peg.replace){
+
+            if (options.target.top < HEADER_HEIGHT 
+            || options.target.left < 0
+            || options.target.top + this.cellSize > this.canvasElt.height
+            || options.target.left + this.cellSize > this.canvasElt.width) {
+                peg.toRemove = true;
+            }else{
+                peg.toRemove = false;
+                 if (!peg.replace){
                     if (peg.size === 2){                        
                         this.canvas.add(this._createRect().canvasElt);                        
                     }else{
@@ -62,10 +48,21 @@ export class LegoGridCanvas{
                     }
                     peg.replace = true;
                 }
-                options.target.set({
-                    left: Math.round(options.target.left / this.cellSize) * this.cellSize,
-                    top: Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT
-                });
+            }
+            options.target.set({
+                left: Math.round(options.target.left / this.cellSize) * this.cellSize,
+                top: Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT
+            });
+
+        });
+
+        this.canvas.on('mouse:up', ()=>{
+            if (this.currentBrick 
+            && this.currentBrick.parentPeg.toRemove
+            && this.currentBrick.parentPeg.replace){
+                delete this.brickModel[this.currentBrick.parentPeg.id];
+                this.canvas.remove(this.currentBrick);
+                this.currentBrick = null;
             }
         });
 
@@ -100,6 +97,10 @@ export class LegoGridCanvas{
         this.rowSelect.square.changeColor(color);
         this.rowSelect.rect.changeColor(color);
         this.canvas.renderAll();
+    }
+
+    export(){
+
     }
 
 
