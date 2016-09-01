@@ -94,7 +94,21 @@ export class LegoGridCanvas{
     }
 
     export(){
-
+        let resultArray = []
+        Object.keys(this.brickModel).forEach((key)=>{
+            let pegTmp = this.brickModel[key];
+            resultArray.push({
+                size : pegTmp.size,
+                color : pegTmp.color,
+                angle : pegTmp.angle,
+                top : pegTmp.top,
+                left : pegTmp.left
+            });
+        });
+        return {
+            user : '',
+            instructions : resultArray
+        };
     }
 
 

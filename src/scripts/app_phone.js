@@ -7,13 +7,15 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
 (function () {
 
-    let gameInit = false;
+    let gameInit = false,
+     fireBaseLego = null,
+     legoCanvas = null;
 
     function initGame(){
 
-        new FireBaseLegoApp().app.database().ref("/test").push({test:true});
+        fireBaseLego = new FireBaseLegoApp().app;
 
-        let legoCanvas = new LegoGridCanvas('canvasDraw', true);
+        legoCanvas = new LegoGridCanvas('canvasDraw', true);
 
         $("#color-picker2").spectrum({
             showPaletteOnly: true,
@@ -46,6 +48,11 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             document.getElementById('color-picker2').setAttribute('hidden',"");
             document.getElementById('help').setAttribute('hidden',"");
 
+        });
+
+        document.getElementById('btnSubmission').addEventListener('click',()=>{
+            // TODO valider l'envoie
+            fireBaseLego.database().ref("/draw").push(legoCanvas.export());
         });
 
 
