@@ -1,13 +1,12 @@
 'use strict'
 
-export function legoColors(){
-    /*
-    * Colors from 
-    * http://lego.wikia.com/wiki/Colour_Palette 
-    * And http://www.peeron.com/cgi-bin/invcgis/colorguide.cgi
-    * Only Show the color use since 2010
-    **/ 
-    return [
+/*
+* Colors from 
+* http://lego.wikia.com/wiki/Colour_Palette 
+* And http://www.peeron.com/cgi-bin/invcgis/colorguide.cgi
+* Only Show the color use since 2010
+**/ 
+export const LEGO_COLORS = [
     'rgb(245, 205, 47)', //24, Bright Yellow *
     'rgb(253, 234, 140)', //226, Cool Yellow *
     'rgb(218, 133, 64)', //106, Bright Orange *
@@ -41,8 +40,4 @@ export function legoColors(){
     'rgb(163, 162, 164)', //194, Medium Stone Grey *
     'rgb(99, 95, 97)', //199, Dark Stone Grey *
     'rgb(27, 42, 52)', //26, Black *        
-]};
-
-export  function legoBaseColor(){
-    return  '#0d69f2'; //23, Bright Blue *
-}
+];
