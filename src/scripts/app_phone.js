@@ -1,6 +1,6 @@
 'use strict'
 import {LEGO_COLORS} from './common/legoColors.js';
-import {BASE_LEGO_COLOR} from '../common/const.js';
+import {BASE_LEGO_COLOR} from './common/const.js';
 import {FireBaseLegoApp} from './firebase/firebase.js';
 import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
