@@ -49,10 +49,10 @@ export class LegoGridCanvas{
                     peg.replace = true;
                 }
             }
-            options.target.set({
-                left: Math.round(options.target.left / this.cellSize) * this.cellSize,
-                top: Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT
-            });
+            peg.move(
+                Math.round(options.target.left / this.cellSize) * this.cellSize, //left
+                Math.round((options.target.top - HEADER_HEIGHT) / this.cellSize) * this.cellSize + HEADER_HEIGHT // top
+            );            
 
         });
 
@@ -67,23 +67,17 @@ export class LegoGridCanvas{
         });
 
         this.canvas.on('object:rotating', (options) =>{
+            let peg = options.target.parentPeg;
+
            if ((options.target.angle > 0 && options.target.angle < 45)
             ||(options.target.angle < 360 && options.target.angle >= 315)){
-                options.target.set({
-                    angle:0
-                });
+                peg.rotate(0);
            }else if (options.target.angle >= 45 && options.target.angle < 135){
-                options.target.set({
-                    angle:90
-                });
+               peg.rotate(90);
            }else if (options.target.angle >= 135 && options.target.angle < 225){
-                options.target.set({
-                    angle:180
-                });
+               peg.rotate(180);
            }else if (options.target.angle >= 225 && options.target.angle < 315){
-                options.target.set({
-                    angle:270
-                });
+               peg.rotate(270);
            }
         });
 
@@ -145,11 +139,7 @@ export class LegoGridCanvas{
     
 
     _drawCanvas() {
-        //context.clearRect(0, 0, canvas.width, canvas.height);
-
         this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));
-
-        //window.requestAnimationFrame(drawCanvas);
     }
 
 }

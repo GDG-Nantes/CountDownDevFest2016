@@ -7,6 +7,10 @@ export class Peg{
         this.id = `Peg${size}-${Date.now()}`;
         this.isReplace = false;
         this.toRemove = false;
+        this.color = color;
+        this.top = cellSize;
+        this.left = left;
+        this.angle = 0;
 
 
         this.rectBasic = new fabric.Rect({
@@ -62,11 +66,28 @@ export class Peg{
     }
 
     changeColor(color){
+        this.color = color;
         this.rectBasic.set('fill', color);
         this.circleGroup.changeColor(color);
         if (this.size === 2){
             this.circleGroup2.changeColor(color);
         }
+    }
+
+    move(left, top){
+        this.top = top;
+        this.left = left;
+        this.group.set({
+            top: top,
+            left : left
+        });
+    }
+
+    rotate(angle){
+        this.angle = angle;
+        this.group.set({
+            angle : angle
+        });
     }
 
 }
