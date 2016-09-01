@@ -1,6 +1,7 @@
 'use strict'
 import {Peg} from './lego_shape/peg.js';
 import {legoColors, legoBaseColor} from './common/legoColors.js';
+import {FireBaseLegoApp} from './firebase/firebase.js';
 
 (function () {
 
@@ -25,6 +26,9 @@ import {legoColors, legoBaseColor} from './common/legoColors.js';
 
 
     function initGame(){
+
+        new FireBaseLegoApp().app.database().ref("/test").push({test:true});
+
         let canvasElt = document.getElementById('canvasDraw');  
         canvasRect = canvasElt.getBoundingClientRect();
         canvasElt.width = canvasRect.width;
