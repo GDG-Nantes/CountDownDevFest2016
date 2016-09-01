@@ -38,6 +38,9 @@ export class Circle{
     changeColor(color){
         this.circleBasic.set('fill', ColorLuminance(color, -0.1));
         this.circleBasicEtx.set('fill', ColorLuminance(color, 0.1));
-        this.text.set('fill', ColorLuminance(color, -0.5));
+        this.text.set({
+            fill : ColorLuminance(color, -0.15),
+            stroke : ColorLuminance(color, -0.20)
+        });
     }
 }
