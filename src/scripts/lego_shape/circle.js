@@ -21,10 +21,10 @@ export class Circle{
 
         this.text = new fabric.Text('GDG', {
             fontSize: cellSize / 5,
-            fill: ColorLuminance(color, -0.5),
+            fill: ColorLuminance(color, -0.15),
             originX: 'center',
             originY: 'center',
-            stroke: ColorLuminance(color, -0.7),
+            stroke: ColorLuminance(color, -0.20),
             strokeWidth: 1
         });
 
