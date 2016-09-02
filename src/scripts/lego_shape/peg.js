@@ -2,15 +2,15 @@
 import {Circle} from './circle.js';
 
 export class Peg{
-    constructor(size, cellSize, color, left){
+    constructor(size, cellSize, color, left, top, angle){
         this.size = size;
         this.id = `Peg${size}-${Date.now()}`;
         this.isReplace = false;
         this.toRemove = false;
         this.color = color;
-        this.top = cellSize;
+        this.top = top || cellSize;
         this.left = left;
-        this.angle = 0;
+        this.angle = angle || 0;
 
 
         this.rectBasic = new fabric.Rect({
@@ -42,8 +42,9 @@ export class Peg{
             
 
         this.group = new fabric.Group(arrayElts, {
-            left: left,
-            top: cellSize,
+            left: this.left,
+            top: this.top,
+            angle: this.angle,
             lockRotation : this.size === 1,
             lockScalingX : true,
             lockScalingY : true,
