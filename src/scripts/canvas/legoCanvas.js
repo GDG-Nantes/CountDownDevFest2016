@@ -167,10 +167,19 @@ export class LegoGridCanvas {
         let maxSize = max * this.cellSize;
         for (var row =0; row < max; row++){
             for (var col = 0; col < max; col++ ){
-                let circle = new Circle(this.cellSize, "#fff");
+                 let squareTmp = new fabric.Rect({
+                    width: this.cellSize,
+                    height: this.cellSize,
+                    fill: "#ffffff",
+                    originX: 'center',
+                    originY: 'center',
+                    centeredRotation: true,
+                    hasControls: false                        
+                });
+                let circle = new Circle(this.cellSize, "#FFFFFF");
                 circle.canvasElt.set({
-                    left: this.cellSize * col  + (this.cellSize / 4) -2.5,
-                    top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,
+                    //left: this.cellSize * col  + (this.cellSize / 4) -2.5,
+                    //top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,
                     lockRotation : true,
                     lockScalingX : true,
                     lockScalingY : true,
@@ -179,7 +188,19 @@ export class LegoGridCanvas {
                     hasControls : false,
                     hasBorders : false
                 });
-                this.canvas.add(circle.canvasElt);
+                let groupTmp = new fabric.Group([squareTmp, circle.canvasElt], {
+                    left: this.cellSize * col,
+                    top: this.cellSize * row + this.headerHeight,
+                    angle: 0,
+                    lockRotation : true,
+                    lockScalingX : true,
+                    lockScalingY : true,
+                    lockMovementX : true,
+                    lockMovementY : true,
+                    hasControls : false,
+                    hasBorders : false
+                });
+                this.canvas.add(groupTmp);
             }
         }
         this.canvas.renderAll();
