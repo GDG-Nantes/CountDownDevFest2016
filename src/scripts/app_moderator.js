@@ -64,6 +64,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 currentKey = keys[0];
                 currentDraw = snapshotFb[keys[0]];
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
+                document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
+            }else{
+                document.getElementById('proposition-text').innerHTML = "En attente de proposition";
             }
             
         }, function(err) {
