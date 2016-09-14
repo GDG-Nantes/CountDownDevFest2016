@@ -1,5 +1,6 @@
 'use strict'
 import {Peg} from '../lego_shape/peg.js';
+import {Circle} from '../lego_shape/circle.js';
 import {NB_CELLS, HEADER_HEIGHT, BASE_LEGO_COLOR} from '../common/const.js';
 import {legoBaseColor} from '../common/legoColors.js';
 
@@ -28,7 +29,7 @@ export class LegoGridCanvas {
 
         if (showRow) {
 
-            this.canvas.on('object:selected', (options) => this.currentBrick = options.target);
+            this.canvas.on('object:selected', (options) => this.currentBrick = options.target.parentPeg ? options.target : null);
             this.canvas.on('selection:cleared', (options) => this.currentBrick = null);
 
             this.canvas.on('object:moving', (options) => {
@@ -117,6 +118,7 @@ export class LegoGridCanvas {
     }
 
     drawInstructions(instructionObject){
+        this.canvas.renderOnAddRemove = false;
         instructionObject.instructions.forEach((instruction)=>{
             this.canvas.add(
                 this._createBrick(instruction.size, 
@@ -129,6 +131,7 @@ export class LegoGridCanvas {
         });
 
         this.canvas.renderAll();
+        this.canvas.renderOnAddRemove = true;
     }
 
 
@@ -136,7 +139,7 @@ export class LegoGridCanvas {
 
         let max = Math.round(size / this.cellSize);
         let maxSize = max * this.cellSize;
-        for (var i = 0; i <= max; i++) {
+        for (var i = 0; i <= max; i++) {          
             // Rows
             this.canvas.add(new fabric.Line([i * this.cellSize, this.headerHeight, i * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
             // Cols
@@ -149,8 +152,31 @@ export class LegoGridCanvas {
                 , this._createRect().canvasElt
             );
         }
+    }
 
-
+    _drawWhitePeg(size){
+        this.canvas.renderOnAddRemove = false;
+        let max = Math.round(size / this.cellSize);
+        let maxSize = max * this.cellSize;
+        for (var row =0; row < max; row++){
+            for (var col = 0; col < max; col++ ){
+                let circle = new Circle(this.cellSize, "#fff");
+                circle.canvasElt.set({
+                    left: this.cellSize * col  + (this.cellSize / 4) -2.5,
+                    top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,
+                    lockRotation : true,
+                    lockScalingX : true,
+                    lockScalingY : true,
+                    lockMovementX : true,
+                    lockMovementY : true,
+                    hasControls : false,
+                    hasBorders : false
+                });
+                this.canvas.add(circle.canvasElt);
+            }
+        }
+        this.canvas.renderAll();
+        this.canvas.renderOnAddRemove = true;
     }
 
     _createRect() {
@@ -176,6 +202,7 @@ export class LegoGridCanvas {
 
     _drawCanvas() {
         this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));
+        this._drawWhitePeg(this.canvasRect.width);
     }
 
 }

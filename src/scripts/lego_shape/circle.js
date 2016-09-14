@@ -8,7 +8,6 @@ export class Circle{
             fill: ColorLuminance(color, -0.1),
             originX: 'center',
             originY: 'center'
-
         });
 
         this.circleBasicEtx = new fabric.Circle({
@@ -16,7 +15,6 @@ export class Circle{
             fill: ColorLuminance(color, 0.1),
             originX: 'center',
             originY: 'center'
-
         });
 
         this.text = new fabric.Text('GDG', {
