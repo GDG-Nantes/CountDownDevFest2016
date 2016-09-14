@@ -23,7 +23,7 @@ export class LegoGridCanvas {
         this.brickModel = {},
             this.createNewBrick = false;
         this.currentBrick = null;
-        this.lastColor = BASE_LEGO_COLOR,
+        this.lastColor = BASE_LEGO_COLOR;
 
         this._drawCanvas();
 
@@ -136,7 +136,6 @@ export class LegoGridCanvas {
 
 
     _drawGrid(size) {
-
         let max = Math.round(size / this.cellSize);
         let maxSize = max * this.cellSize;
         for (var i = 0; i <= max; i++) {          
@@ -176,7 +175,7 @@ export class LegoGridCanvas {
             }
         }
         this.canvas.renderAll();
-        this.canvas.renderOnAddRemove = true;
+        this.canvas.renderOnAddRemove = true;        
     }
 
     _createRect() {
@@ -201,8 +200,8 @@ export class LegoGridCanvas {
 
 
     _drawCanvas() {
-        this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));
         this._drawWhitePeg(this.canvasRect.width);
+        this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));
     }
 
 }
