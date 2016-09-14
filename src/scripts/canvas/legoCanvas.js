@@ -144,14 +144,14 @@ export class LegoGridCanvas {
 
 
     _drawGrid(size) {
-        let max = Math.round(size / this.cellSize);
+        /*let max = Math.round(size / this.cellSize);
         let maxSize = max * this.cellSize;
         for (var i = 0; i <= max; i++) {          
             // Rows
             this.canvas.add(new fabric.Line([i * this.cellSize, this.headerHeight, i * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
             // Cols
             this.canvas.add(new fabric.Line([0, i * this.cellSize + this.headerHeight, maxSize, i * this.cellSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-        }
+        }*/
 
         if (this.showRow){
             this.canvas.add(
@@ -170,13 +170,13 @@ export class LegoGridCanvas {
                  let squareTmp = new fabric.Rect({
                     width: this.cellSize,
                     height: this.cellSize,
-                    fill: "#ffffff",
+                    fill: "#FFFFFF",
                     originX: 'center',
                     originY: 'center',
                     centeredRotation: true,
                     hasControls: false                        
                 });
-                let circle = new Circle(this.cellSize, "#FFFFFF");
+                let circle = new Circle(this.cellSize, "#EFEFEF");
                 circle.canvasElt.set({
                     //left: this.cellSize * col  + (this.cellSize / 4) -2.5,
                     //top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,
