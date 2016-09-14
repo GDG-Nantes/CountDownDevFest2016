@@ -98,7 +98,7 @@ export class LegoGridCanvas {
         this.canvas.renderAll();
     }
 
-    export(userName) {
+    export(userName, userId) {
         let resultArray = []
         Object.keys(this.brickModel).forEach((key) => {
             let pegTmp = this.brickModel[key];
@@ -113,6 +113,7 @@ export class LegoGridCanvas {
         });
         return {
             user: userName,
+            userId : userId,
             instructions: resultArray
         };
     }
