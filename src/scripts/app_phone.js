@@ -31,7 +31,13 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     function pageLoad() {
 
         fireBaseLego = new FireBaseLegoApp().app;
-        fireBaseAuth = new FireBaseAuth(firebase,'login-msg','hello-msg', 'signout'); 
+        fireBaseAuth = new FireBaseAuth({
+            idDivLogin: 'login-msg', 
+            idNextDiv : 'hello-msg', 
+            idLogout : 'signout',
+            idImg : "img-user",
+            idDisplayName : "name-user"
+        }); 
 
         document.getElementById('startBtn').addEventListener('click', ()=>{
             document.getElementById('hello-msg').setAttribute("hidden","");

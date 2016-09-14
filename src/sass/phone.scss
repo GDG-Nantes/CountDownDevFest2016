@@ -27,3 +27,17 @@ canvas{
     position: relative;
 }
 
+$img-user : 80px;
+
+#img-user{
+    width:$img-user;
+    height: $img-user;
+    border-radius: $img-user;
+    background-size:cover;
+    border: thin solid black;
+    align-self: center;
+    margin-top: 10px;
+}
+
+
+

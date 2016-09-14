@@ -26,6 +26,7 @@
         <header class="mdl-layout__header">
             <div class="mdl-layout__header-row">
                 <!-- Title -->
+                <div class="mdl-layout-spacer"></div>
                 <img src="./assets/img/lego_painter_128.png">
                 <span class="mdl-layout-title">Legonnary</span>
                 <div class="mdl-layout-spacer"></div>
@@ -37,7 +38,13 @@
                 </nav>
             </div>
         </header>
-        <div class="mdl-layout__content">
+        <div class="mdl-layout__drawer">
+            <img src="./assets/img/lego_painter_128.png" id="img-user" hiddden><span id="name-user" class="mdl-layout-title">Non Connecté</span>
+            <nav class="mdl-navigation">
+            <a class="mdl-navigation__link" href="">Mes créations</a>
+            </nav>
+        </div>
+        <main class="mdl-layout__content">
             <div class="page-content">
                  <div id="login-msg" class="demo-card-wide mdl-card mdl-shadow--2dp">
                         <div class="mdl-card__title">
@@ -73,7 +80,7 @@
                     </button>
                 </div>
             </div>
-        </div>
+        </main>
     </div>
     <script src="https://rawgit.com/kangax/fabric.js/master/dist/fabric.js"></script>
     <script src="https://www.gstatic.com/firebasejs/3.3.0/firebase.js"></script>

@@ -1,7 +1,7 @@
 'use strict'
 
 export class FireBaseAuth{
-    constructor(firebase, idDivLogin, idNextDiv, idLogout){
+    constructor(config){
       
         let uiConfig = {
             'callbacks': {
@@ -40,9 +40,13 @@ export class FireBaseAuth{
         this.ui = new firebaseui.auth.AuthUI(firebase.auth());
         this.ui.start('#firebaseui-auth-container', uiConfig);
         this.user = null;
-        this.idDivLogin = idDivLogin;
-        this.idNextDiv = idNextDiv;
-        this.idLogout = idLogout;
+        this.idDivLogin = config.idDivLogin;
+        this.idNextDiv = config.idNextDiv;
+        this.idLogout = config.idLogout;
+
+        // Optionals
+        this.idImg = config.idImg ? config.idImg : null;
+        this.idDisplayName = config.idDisplayName ? config.idDisplayName : null;
 
 
         firebase.auth().onAuthStateChanged(this._checkCallBackContext.bind(this), 
@@ -51,7 +55,7 @@ export class FireBaseAuth{
 
         this.cbAuthChanged = null;
 
-        document.getElementById(this.idLogout).addEventListener('click', ()=> fireBaseAuth.signedOut());
+        document.getElementById(this.idLogout).addEventListener('click', ()=>  firebase.auth().signOut());
     }
 
     _checkCallBackErrorContext(error){
@@ -64,10 +68,20 @@ export class FireBaseAuth{
             document.getElementById(this.idDivLogin).setAttribute("hidden","");
             document.getElementById(this.idNextDiv).removeAttribute('hidden');
             document.getElementById(this.idLogout).removeAttribute("hidden");            
+            if (this.idImg){
+                document.getElementById(this.idImg).src = user.photoURL;
+                document.getElementById(this.idImg).removeAttribute('hidden');                
+            }
+            if (this.idDisplayName){
+                document.getElementById(this.idDisplayName).innerHTML = user.displayName;;                
+            }
         }else{
             document.getElementById(this.idDivLogin).removeAttribute("hidden","");
             document.getElementById(this.idNextDiv).setAttribute("hidden","");
             document.getElementById(this.idLogout).setAttribute("hidden","");
+            document.getElementById(this.idImg).src = "";
+            document.getElementById(this.idImg).setAttribute('hidden', "");
+            document.getElementById(this.idDisplayName).innerHTML = "Non Conntecté";            
 
         }
         if(this.cbAuthChanged){
@@ -87,9 +101,6 @@ export class FireBaseAuth{
         this.cbAuthChanged = cb;
     }
 
-    signedOut(){
-        firebase.auth().signOut();
-    }
 
     displayName(){
         return this.user ? this.user.displayName : null;

@@ -24,7 +24,11 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     function pageLoad() {
 
         fireBaseLego = new FireBaseLegoApp().app;
-        let fireBaseAuth = new FireBaseAuth(firebase, 'login-msg', 'game', 'signout'); 
+        let fireBaseAuth = new FireBaseAuth({
+            idDivLogin: 'login-msg', 
+            idNextDiv : 'game', 
+            idLogout : 'signout'
+        }); 
 
         fireBaseAuth.onAuthStateChanged((user)=> {
             if (user){
