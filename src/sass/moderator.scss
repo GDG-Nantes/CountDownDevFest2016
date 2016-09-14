@@ -14,6 +14,10 @@ canvas{
     position: relative;
 }
 
+#login-msg{
+    align-self: center;
+}
+
 @media only screen and (max-width: 768px) {
     canvas{
         width: 100vw;

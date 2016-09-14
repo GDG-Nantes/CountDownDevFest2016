@@ -2,6 +2,7 @@
 import {LEGO_COLORS} from './common/legoColors.js';
 import {BASE_LEGO_COLOR} from './common/const.js';
 import {FireBaseLegoApp} from './firebase/firebase.js';
+import {FireBaseAuth} from './firebase/firebaseAuth.js';
 import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
 
@@ -12,8 +13,6 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      legoCanvas = null;
 
     function initGame(){
-
-        fireBaseLego = new FireBaseLegoApp().app;
 
         legoCanvas = new LegoGridCanvas('canvasDraw', true);
 
@@ -29,6 +28,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     }
 
     function pageLoad() {
+
+        fireBaseLego = new FireBaseLegoApp().app;
+        let fireBaseAuth = new FireBaseAuth(firebase); 
 
         document.getElementById('startBtn').addEventListener('click', ()=>{
             document.getElementById('hello-msg').setAttribute("hidden","");
