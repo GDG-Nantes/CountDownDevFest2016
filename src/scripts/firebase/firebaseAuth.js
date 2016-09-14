@@ -1,7 +1,8 @@
 'use strict'
 
 export class FireBaseAuth{
-    constructor(firebase){
+    constructor(firebase, idDivLogin, idNextDiv, idLogout){
+      
         let uiConfig = {
             'callbacks': {
                 // Called when the user has been successfully signed in.
@@ -39,7 +40,9 @@ export class FireBaseAuth{
         this.ui = new firebaseui.auth.AuthUI(firebase.auth());
         this.ui.start('#firebaseui-auth-container', uiConfig);
         this.user = null;
-
+        this.idDivLogin = idDivLogin;
+        this.idNextDiv = idNextDiv;
+        this.idLogout = idLogout;
 
 
         firebase.auth().onAuthStateChanged(this._checkCallBackContext.bind(this), 
@@ -47,6 +50,8 @@ export class FireBaseAuth{
                                         );
 
         this.cbAuthChanged = null;
+
+        document.getElementById(this.idLogout).addEventListener('click', ()=> fireBaseAuth.signedOut());
     }
 
     _checkCallBackErrorContext(error){
@@ -55,6 +60,16 @@ export class FireBaseAuth{
 
     _checkCallBackContext(user){
         this.user = user;
+        if (user){
+            document.getElementById(this.idDivLogin).setAttribute("hidden","");
+            document.getElementById(this.idNextDiv).removeAttribute('hidden');
+            document.getElementById(this.idLogout).removeAttribute("hidden");            
+        }else{
+            document.getElementById(this.idDivLogin).removeAttribute("hidden","");
+            document.getElementById(this.idNextDiv).setAttribute("hidden","");
+            document.getElementById(this.idLogout).setAttribute("hidden","");
+
+        }
         if(this.cbAuthChanged){
             this.cbAuthChanged(user);
         }

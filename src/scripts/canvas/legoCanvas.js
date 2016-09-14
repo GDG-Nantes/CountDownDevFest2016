@@ -98,7 +98,7 @@ export class LegoGridCanvas {
         this.canvas.renderAll();
     }
 
-    export() {
+    export(userName) {
         let resultArray = []
         Object.keys(this.brickModel).forEach((key) => {
             let pegTmp = this.brickModel[key];
@@ -112,12 +112,14 @@ export class LegoGridCanvas {
             });
         });
         return {
-            user: '',
+            user: userName,
             instructions: resultArray
         };
     }
 
     drawInstructions(instructionObject){
+        this.canvas.clear();
+        this._drawCanvas();
         this.canvas.renderOnAddRemove = false;
         instructionObject.instructions.forEach((instruction)=>{
             this.canvas.add(
@@ -132,6 +134,11 @@ export class LegoGridCanvas {
 
         this.canvas.renderAll();
         this.canvas.renderOnAddRemove = true;
+    }
+
+    resetBoard(){
+        this.canvas.clear();
+        this._drawCanvas();
     }
 
 
@@ -203,5 +210,6 @@ export class LegoGridCanvas {
         this._drawWhitePeg(this.canvasRect.width);
         this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));
     }
+    
 
 }

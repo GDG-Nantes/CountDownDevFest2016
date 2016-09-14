@@ -10,6 +10,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
     let gameInit = false,
      fireBaseLego = null,
+     fireBaseAuth = null,
      legoCanvas = null;
 
     function initGame(){
@@ -30,7 +31,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     function pageLoad() {
 
         fireBaseLego = new FireBaseLegoApp().app;
-        let fireBaseAuth = new FireBaseAuth(firebase); 
+        fireBaseAuth = new FireBaseAuth(firebase,'login-msg','hello-msg', 'signout'); 
 
         document.getElementById('startBtn').addEventListener('click', ()=>{
             document.getElementById('hello-msg').setAttribute("hidden","");
@@ -54,7 +55,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
         document.getElementById('btnSubmission').addEventListener('click',()=>{
             // TODO valider l'envoie
-            fireBaseLego.database().ref("/draw").push(legoCanvas.export());
+            fireBaseLego.database().ref("/draw").push(legoCanvas.export(fireBaseAuth.displayName()));
         });
 
 
