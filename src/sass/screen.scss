@@ -1,0 +1,53 @@
+@import "common";
+
+canvas{
+    width: 600px;
+    height: 600px;
+}
+
+#game{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+#login-msg{
+    align-self: center;
+}
+
+
+$size-photo: 200px;
+
+.img-ori{
+    position:absolute;
+    top: 100px;
+    left:50px;
+
+    width:$size-photo;
+    height:$size-photo;
+    //padding          : 15px 15px 25px 15px;
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75) inset;
+}
+
+.img-ori::after{
+    content:attr(data-author);
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+}
+
+.img-ori:before{
+    content:'';
+    width:$size-photo+30px;
+    height: $size-photo+40px;
+    background:#FFF;
+    position:absolute;
+    top:-15px;
+    left:-15px;
+    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+}

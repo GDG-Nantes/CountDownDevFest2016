@@ -142,11 +142,21 @@ export class LegoGridCanvas {
         this._drawCanvas();
     }
 
+    snapshot(){
+        return this.canvas.toDataURL();
+    }
+
 
     _drawGrid(size) {
         /*let max = Math.round(size / this.cellSize);
         let maxSize = max * this.cellSize;
-        for (var i = 0; i <= max; i++) {          
+        // Rows
+        this.canvas.add(new fabric.Line([0 * this.cellSize, this.headerHeight, 0 * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
+        this.canvas.add(new fabric.Line([max * this.cellSize - 1, this.headerHeight, max * this.cellSize - 1, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
+        // Cols
+        this.canvas.add(new fabric.Line([0, 0 * this.cellSize + this.headerHeight, maxSize, 0 * this.cellSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
+        this.canvas.add(new fabric.Line([0, max * this.cellSize + this.headerHeight - 1, maxSize, max * this.cellSize + this.headerHeight - 1], { stroke: '#ccc', selectable: false }));*/
+        /*for (var i = 0; i <= max; i++) {          
             // Rows
             this.canvas.add(new fabric.Line([i * this.cellSize, this.headerHeight, i * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
             // Cols
