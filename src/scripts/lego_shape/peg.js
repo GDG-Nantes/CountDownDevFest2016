@@ -20,7 +20,8 @@ export class Peg{
             originX: 'center',
             originY: 'center',
             centeredRotation: true,
-            hasControls: false                        
+            hasControls: false,
+            shadow : "5px 5px 10px rgba(0,0,0,0.2)"                        
         });
 
 
