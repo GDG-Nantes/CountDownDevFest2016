@@ -1,7 +1,7 @@
 'use strict'
 import {Peg} from '../lego_shape/peg.js';
 import {Circle} from '../lego_shape/circle.js';
-import {NB_CELLS, HEADER_HEIGHT, BASE_LEGO_COLOR} from '../common/const.js';
+import {NB_CELLS, HEADER_HEIGHT, BASE_LEGO_COLOR, BACKGROUND_LEGO_COLOR} from '../common/const.js';
 import {legoBaseColor} from '../common/legoColors.js';
 
 export class LegoGridCanvas {
@@ -170,13 +170,13 @@ export class LegoGridCanvas {
                  let squareTmp = new fabric.Rect({
                     width: this.cellSize,
                     height: this.cellSize,
-                    fill: "#FFFFFF",
+                    fill: BACKGROUND_LEGO_COLOR,
                     originX: 'center',
                     originY: 'center',
                     centeredRotation: true,
                     hasControls: false                        
                 });
-                let circle = new Circle(this.cellSize, "#EFEFEF");
+                let circle = new Circle(this.cellSize, BACKGROUND_LEGO_COLOR);
                 circle.canvasElt.set({
                     //left: this.cellSize * col  + (this.cellSize / 4) -2.5,
                     //top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,

@@ -7,7 +7,8 @@ export class Circle{
             radius: (cellSize / 2) - 5,
             fill: ColorLuminance(color, -0.1),
             originX: 'center',
-            originY: 'center'
+            originY: 'center',
+            shadow : "0px 2px 10px rgba(0,0,0,0.2)"
         });
 
         this.circleBasicEtx = new fabric.Circle({
