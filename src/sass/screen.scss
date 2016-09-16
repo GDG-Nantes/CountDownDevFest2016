@@ -1,8 +1,13 @@
 @import "common";
 
+$canvas-size:500px;
+
 canvas{
-    width: 600px;
-    height: 600px;
+    position:fixed;
+    top: calc(50vh - 250px);
+    left: calc(50vw - 250px);
+    width: $canvas-size;
+    height: $canvas-size;
 }
 
 #game{
@@ -18,36 +23,98 @@ canvas{
     align-self: center;
 }
 
+#count-down-text{
+    font-family: 'LegoBrix';
+    font-size:50px;
+    height: 50px;
+
+}
 
 $size-photo: 200px;
+$size-photo-big: $canvas-size;
+
+.img-ori-parent.big{
+    width:$size-photo-big+90px;
+    height: $size-photo-big+200px;
+    background:white;
+    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75);    
+
+    .img-ori{    
+        top:45px;
+        left:45px;
+        width:$size-photo-big;
+        height:$size-photo-big;    
+    }
+}
+.img-ori-parent.big::after{
+    bottom: 15pt;
+    left: 0;
+    font-size:50pt;
+    line-height:50pt;
+    transition-property: all;
+    transition-duration: 2s;
+    transition-timing-fonction: ease;
+}
+
+
+.img-ori-parent{
+    position:absolute;
+    width:$size-photo+40px;
+    height: $size-photo+100px;
+    background:white;
+    z-index: 10;
+    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+    transition-property: all;
+    transition-duration: 2s;
+    transition-timing-fonction: ease;
+}
 
 .img-ori{
+    
     position:absolute;
-    top: 100px;
-    left:50px;
+    top:20px;
+    left:20px;
 
     width:$size-photo;
     height:$size-photo;
     //padding          : 15px 15px 25px 15px;
     background-size: contain;
     background-repeat: no-repeat;
-    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75) inset;
+    box-shadow       : 0px 0px 5px 0px rgba(0, 0, 0, 1.5) inset;
+    transition-property: all;
+    transition-duration: 2s;
+    transition-timing-fonction: ease;
 }
 
-.img-ori::after{
+.img-ori-parent::after{
     content:attr(data-author);
     position: absolute;
-    bottom: -10px;
-    left: 50%;
+    width:100%;
+    text-align:center;
+    bottom: 15pt;
+    left: 0;
+    font-size:20pt;
+    line-height:20pt;
+    font-family:"Roboto","Helvetica","Arial",sans-serif;
+    transition-property: all;
+    transition-duration: 2s;
+    transition-timing-fonction: linear;
 }
 
-.img-ori:before{
-    content:'';
-    width:$size-photo+30px;
-    height: $size-photo+40px;
-    background:#FFF;
-    position:absolute;
-    top:-15px;
-    left:-15px;
-    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75);
+#flash-effect{
+    position:fixed;    
+    width:$canvas-size+500;
+    height:$canvas-size+500;
+    background:radial-gradient(ellipse at center, rgba(255,255,255,1) 0%, rgba(0,0,0,0) 80%);
+    opacity:0;
+}
+
+#flash-effect.flash{
+    animation: flash;
+    animation-duration: 1s;
+}
+
+@keyframes flash {
+    from {opacity:1;}
+    to {opacity:0;}
 }

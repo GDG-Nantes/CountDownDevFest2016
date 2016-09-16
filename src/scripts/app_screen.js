@@ -20,18 +20,56 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
         legoCanvas = new LegoGridCanvas('canvasDraw', false);
 
-        getNextDraw();
-
-        setTimeout(()=>{
-            let img = document.createElement('div');
-            img.style['background-image'] = `url(${legoCanvas.snapshot()})`;//, linear-gradient(to right, #FFF, #FFF)`;
-            img.classList.add('img-ori');
-            img.setAttribute('data-author', "test");
-
-            document.body.appendChild(img);
-        },2000);
+        getNextDraw();        
       
     }
+
+
+    function generateSnapshot(user){
+        let rectCanvas = document.querySelector('.canvas-container').getBoundingClientRect();
+        let flashDiv = document.getElementById('flash-effect')
+        flashDiv.style.top = (rectCanvas.top - 250)+"px";
+        flashDiv.style.left = (rectCanvas.left -250)+"px";
+        flashDiv.classList.add('flash');
+        setTimeout(()=>{
+            flashDiv.classList.remove('flash');
+            let imgParent = document.createElement('div');
+            let img = document.createElement('img');
+            img.src = legoCanvas.snapshot();
+            img.classList.add('img-ori');
+            imgParent.classList.add('img-ori-parent');
+            imgParent.setAttribute('data-author', user);                
+            imgParent.appendChild(img);
+            imgParent.classList.add('big');
+            // Initial Position
+            imgParent.style.top=(rectCanvas.top-45)+"px";
+            imgParent.style.left=(rectCanvas.left-45)+"px";                
+
+            document.body.appendChild(imgParent);
+            legoCanvas.resetBoard();
+            document.getElementById('proposition-text').innerHTML = "En attente de proposition";
+
+            setTimeout(function() {                    
+
+                let left = Date.now()%2 === 0;
+                let horizontalDist = Math.floor(Math.random() * 300) + 1;
+                let verticalDist = Math.floor(Math.random() * 90) + 1;
+                let angleChoice = Math.floor(Math.random() * 3) + 1;    
+
+                imgParent.classList.remove('big');
+                imgParent.style.top=`calc(${verticalDist}vh - 300px + 100px)`;
+                if (!left){
+                    imgParent.style.left = 'inherit';
+                    imgParent.style.right = `${horizontalDist}px`;
+                }
+                imgParent.style.left=`${horizontalDist}px`;
+                let angle = angleChoice === 1 ? -9 : angleChoice === 2 ? 14 : 0;
+                imgParent.style.transform = `rotate(${angle}deg)`; 
+                //getNextDraw();
+            }, 100);
+        },500);
+    }
+
 
     function pageLoad() {
 
@@ -77,6 +115,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 currentDraw = snapshotFb[keys[0]];
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
+                setTimeout(()=>generateSnapshot(currentDraw.user),2000);
             }else{
                 document.getElementById('proposition-text').innerHTML = "En attente de proposition";
             }
@@ -86,6 +125,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         // error callback triggered with PERMISSION_DENIED
         });
     }
+
+
 
 
     window.addEventListener('load', pageLoad);
