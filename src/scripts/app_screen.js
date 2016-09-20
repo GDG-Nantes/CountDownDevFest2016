@@ -9,7 +9,10 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      fireBaseLego = null,
      legoCanvas = null, 
      currentKey = null,
-     currentDraw = null;
+     currentDraw = null,
+     hourElt = null,
+     minuteElt = null, 
+     cibleDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS");
 
     function initGame(){
 
@@ -47,7 +50,21 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 }
             }
         });
+
+        cibleDate = moment();
+        cibleDate.add(30, 'minutes');
+        window.requestAnimationFrame(checkTime);
         
+    }
+
+    function checkTime(){
+
+        if (moment().isAfter(cibleDate)){
+            // TODO 
+        }else{
+            window.requestAnimationFrame(checkTime);
+        }
+
     }
 
     function getNextDraw(){
