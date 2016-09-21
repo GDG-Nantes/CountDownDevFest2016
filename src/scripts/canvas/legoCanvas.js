@@ -33,7 +33,6 @@ export class LegoGridCanvas {
             this.canvas.on('selection:cleared', (options) => this.currentBrick = null);
 
             this.canvas.on('object:moving', (options) => {
-
                 let peg = options.target.parentPeg;
 
 
@@ -214,7 +213,15 @@ export class LegoGridCanvas {
             }
         }
         this.canvas.renderAll();
-        this.canvas.renderOnAddRemove = true;        
+        this.canvas.renderOnAddRemove = true;
+        let url = this.canvas.toDataURL();
+        this.canvas.clear();     
+        this.canvas.setBackgroundImage(url,this.canvas.renderAll.bind(this.canvas), {
+            originX: 'left',
+            originY: 'top',
+            width: this.canvas.width,
+          height: this.canvas.height,
+        });   
     }
 
     _createRect() {

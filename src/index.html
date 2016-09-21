@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="css/phone.css">
 
     <!-- favicon -->
-    <link rel="icon" type="image/png" href="./assets/img/favicon.ico" />    
+    <link rel="icon" type="image/png" href="./assets/img/favicon.ico" />
 
     <meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
@@ -41,28 +41,32 @@
         <div class="mdl-layout__drawer">
             <img src="./assets/img/lego_painter_128.png" id="img-user" hiddden><span id="name-user" class="mdl-layout-title">Non Connecté</span>
             <nav class="mdl-navigation">
-            <a class="mdl-navigation__link" href="">Mes créations</a>
+                <a class="mdl-navigation__link" href="">Mes créations</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
             <div class="page-content">
-                 <div id="login-msg" class="demo-card-wide mdl-card mdl-shadow--2dp">
-                        <div class="mdl-card__title">
+                <div id="loading" hidden>
+                    <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
+                </div>
+                <div id="login-msg" class="demo-card-wide mdl-card mdl-shadow--2dp">
+                    <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Login</h2>
                     </div>
                     <div class="mdl-card__supporting-text">
                         Vous devez vous connecter pour Jouer !
                     </div>
-                    <div class="mdl-card__actions mdl-card--border">                        
+                    <div class="mdl-card__actions mdl-card--border">
                         <div id="firebaseui-auth-container"></div>
                     </div>
                 </div>
                 <div id="hello-msg" class="demo-card-wide mdl-card mdl-shadow--2dp" hidden>
-                     <div class="mdl-card__title">
+                    <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Comment Jouer ?</h2>
                     </div>
                     <div class="mdl-card__supporting-text">
-                        Choississez votre pièce et votre couleur à l'aide du bouton de palette dans la barre de menu. Positionnez ensuite votre pièce sur la grille. Quand votre dessin est terminé, cliquez sur le bouton valider
+                        Choississez votre pièce et votre couleur à l'aide du bouton de palette dans la barre de menu. Positionnez ensuite votre pièce
+                        sur la grille. Quand votre dessin est terminé, cliquez sur le bouton valider
                     </div>
                     <div class="mdl-card__actions mdl-card--border">
                         <button id="startBtn" class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored">
