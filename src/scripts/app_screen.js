@@ -13,7 +13,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      minutesElt = null,
      secondsElt = null, 
      lastLeft = false,
-     cibleDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS");
+     cibleDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS"),
+     readyForNewDraw = true;
 
     function initGame(){
 
@@ -61,12 +62,12 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 imgParent.style.top=`calc(100px + ${verticalDist}px)`;
                 imgParent.style.left=`${horizontalDist}px`;
                 if (!lastLeft){
-                    imgParent.style.left = `calc(100vw - ${horizontalDist}px)`;                    
+                    imgParent.style.left = `calc(100vw - ${horizontalDist}px - 300px)`;                    
                 }
                 lastLeft = !lastLeft;
                 let angle = angleChoice === 1 ? -9 : angleChoice === 2 ? 14 : 0;
                 imgParent.style.transform = `rotate(${angle}deg)`; 
-                //getNextDraw();
+                getNextDraw();
             }, 100);
         },500);
     }
@@ -87,6 +88,12 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                     gameInit = true;
                     initGame();
                 }
+            }
+        });
+
+        fireBaseLego.database().ref('drawValidated').on('child_added', function(data) {
+            if (readyForNewDraw){
+                getNextDraw();
             }
         });
 
@@ -114,17 +121,22 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     }
 
     function getNextDraw(){
-         fireBaseLego.database().ref('drawValidated').on('value', function(snapshot){
+        readyForNewDraw = false;
+         fireBaseLego.database().ref('drawValidated').once('value', function(snapshot){
             if (snapshot && snapshot.val()){
                 currentDraw = snapshot;
                 let snapshotFb = snapshot.val();
+                console.info(snapshotFb);
                 let keys = Object.keys(snapshotFb);
                 currentKey = keys[0];
                 currentDraw = snapshotFb[keys[0]];
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
+                fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
+                fireBaseLego.database().ref("/drawValidatedShow").push(currentDraw);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
                 setTimeout(()=>generateSnapshot(currentDraw.user),2000);
             }else{
+                readyForNewDraw = true;
                 document.getElementById('proposition-text').innerHTML = "En attente de proposition";
             }
             

@@ -9,7 +9,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      fireBaseLego = null,
      legoCanvas = null, 
      currentKey = null,
-     currentDraw = null;
+     currentDraw = null,
+     readyForNewDraw = true;
 
     function initGame(){
 
@@ -39,6 +40,12 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             }
         });
 
+        fireBaseLego.database().ref('draw').on('child_added', function(data) {
+            if (readyForNewDraw){
+                getNextDraw();
+            }
+        });
+
         document.getElementById('btnSubmissionRefused').addEventListener('click', ()=>{
              fireBaseLego.database().ref(`draw/${currentKey}`).remove();
              fireBaseLego.database().ref("/drawReject").push(currentDraw);
@@ -56,7 +63,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     }
 
     function getNextDraw(){
-         fireBaseLego.database().ref('draw').on('value', function(snapshot){
+        readyForNewDraw = false;
+         fireBaseLego.database().ref('draw').once('value', function(snapshot){
             if (snapshot && snapshot.val()){
                 currentDraw = snapshot;
                 let snapshotFb = snapshot.val();
@@ -66,6 +74,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
             }else{
+                readyForNewDraw = true;
                 document.getElementById('proposition-text').innerHTML = "En attente de proposition";
             }
             
