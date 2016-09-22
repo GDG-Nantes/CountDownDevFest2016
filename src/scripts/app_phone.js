@@ -73,6 +73,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         document.getElementById('btnSubmission').addEventListener('click',()=>{
             // TODO valider l'envoie
             fireBaseLego.database().ref("/draw").push(legoCanvas.export(fireBaseAuth.displayName(), fireBaseAuth.userId()));
+            legoCanvas.resetBoard();
         });
 
 

@@ -137,6 +137,7 @@ export class LegoGridCanvas {
     }
 
     resetBoard(){
+        this.brickModel = {};
         this.canvas.clear();
         this._drawCanvas();
     }
