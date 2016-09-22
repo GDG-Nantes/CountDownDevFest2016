@@ -10,8 +10,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      legoCanvas = null, 
      currentKey = null,
      currentDraw = null,
-     hourElt = null,
-     minuteElt = null, 
+     minutesElt = null,
+     secondsElt = null, 
+     lastLeft = false,
      cibleDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS");
 
     function initGame(){
@@ -43,7 +44,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             imgParent.classList.add('big');
             // Initial Position
             imgParent.style.top=(rectCanvas.top-45)+"px";
-            imgParent.style.left=(rectCanvas.left-45)+"px";                
+            imgParent.style.left=(rectCanvas.left-45)+"px";                      
 
             document.body.appendChild(imgParent);
             legoCanvas.resetBoard();
@@ -51,18 +52,18 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
             setTimeout(function() {                    
 
-                let left = Date.now()%2 === 0;
                 let horizontalDist = Math.floor(Math.random() * 300) + 1;
-                let verticalDist = Math.floor(Math.random() * 90) + 1;
+                let heightScreen = document.body.getBoundingClientRect().height;
+                let verticalDist = Math.floor(Math.random() * (heightScreen - 100 - 300)) + 1;
                 let angleChoice = Math.floor(Math.random() * 3) + 1;    
 
                 imgParent.classList.remove('big');
-                imgParent.style.top=`calc(${verticalDist}vh - 300px + 100px)`;
-                if (!left){
-                    imgParent.style.left = 'inherit';
-                    imgParent.style.right = `${horizontalDist}px`;
-                }
+                imgParent.style.top=`calc(100px + ${verticalDist}px)`;
                 imgParent.style.left=`${horizontalDist}px`;
+                if (!lastLeft){
+                    imgParent.style.left = `calc(100vw - ${horizontalDist}px)`;                    
+                }
+                lastLeft = !lastLeft;
                 let angle = angleChoice === 1 ? -9 : angleChoice === 2 ? 14 : 0;
                 imgParent.style.transform = `rotate(${angle}deg)`; 
                 //getNextDraw();
@@ -89,6 +90,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             }
         });
 
+        minutesElt = document.getElementById('minutes');
+        secondsElt = document.getElementById('seconds');
+
         cibleDate = moment();
         cibleDate.add(30, 'minutes');
         window.requestAnimationFrame(checkTime);
@@ -100,6 +104,10 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         if (moment().isAfter(cibleDate)){
             // TODO 
         }else{
+            let diff = cibleDate.diff(moment());
+            minutesElt.innerHTML = Math.round(diff / (60 * 1000));;
+            secondsElt.innerHTML = Math.round(diff % (60 * 1000) / 1000);
+
             window.requestAnimationFrame(checkTime);
         }
 

@@ -2,6 +2,10 @@
 
 $canvas-size:500px;
 
+body{
+    overflow: hidden;
+}
+
 canvas{
     position:fixed;
     top: calc(50vh - 250px);

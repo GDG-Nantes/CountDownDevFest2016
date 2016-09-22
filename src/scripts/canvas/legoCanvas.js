@@ -225,11 +225,11 @@ export class LegoGridCanvas {
     }
 
     _createRect() {
-        return this._createBrick(2, (this.canvasRect.width / 2) + 2 * this.cellSize);
+        return this._createBrick(2, (this.canvasRect.width / 2) - 3 * this.cellSize);
     }
 
     _createSquare() {
-        return this._createBrick(1, (this.canvasRect.width / 2) - (1 * this.cellSize));
+        return this._createBrick(1, (this.canvasRect.width / 2) + (1 * this.cellSize));
     }
 
     _createBrick(size, left, top, angle, color) {
