@@ -2,6 +2,7 @@
 import {FireBaseLegoApp} from './firebase/firebase.js';
 import {FireBaseAuth} from './firebase/firebaseAuth.js';
 import {LegoGridCanvas} from './canvas/legoCanvas.js';
+import {AudioPlayer} from './audio/player.js';
 
 (function () {
 
@@ -14,7 +15,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
      secondsElt = null, 
      lastLeft = false,
      cibleDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS"),
-     readyForNewDraw = true;
+     readyForNewDraw = true,
+     audioPlayer = null;
 
     function initGame(){
 
@@ -74,6 +76,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
 
     function pageLoad() {
+
+        audioPlayer = new AudioPlayer();
 
         fireBaseLego = new FireBaseLegoApp().app;
         let fireBaseAuth = new FireBaseAuth({
