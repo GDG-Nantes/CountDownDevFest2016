@@ -46,19 +46,22 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             document.getElementById('help').removeAttribute('hidden');
 
             document.getElementById('loading').removeAttribute('hidden');
-            new Promise(function(resolve, reject){
-                try{
-                    if (!gameInit){
-                        gameInit = true;
-                        initGame();
-                    }
-                    resolve();
-                }catch(e){
-                    reject(e);
-                }                
-            })
-            .then(()=>document.getElementById('loading').setAttribute('hidden', ''))
-            .catch((e)=>console.error(e));
+            setTimeout(function(){
+
+                new Promise(function(resolve, reject){
+                    try{
+                        if (!gameInit){
+                            gameInit = true;
+                            initGame();
+                        }
+                        resolve();
+                    }catch(e){
+                        reject(e);
+                    }                
+                })
+                .then(()=>document.getElementById('loading').setAttribute('hidden', ''))
+                .catch((e)=>console.error(e));
+            },50);
             
         });
 
