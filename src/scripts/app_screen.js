@@ -27,7 +27,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     }
 
 
-    function generateSnapshot(user){
+    function generateSnapshot(user, dataUrl){
         let rectCanvas = document.querySelector('.canvas-container').getBoundingClientRect();
         let flashDiv = document.getElementById('flash-effect')
         flashDiv.style.top = (rectCanvas.top - 250)+"px";
@@ -37,7 +37,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             flashDiv.classList.remove('flash');
             let imgParent = document.createElement('div');
             let img = document.createElement('img');
-            img.src = legoCanvas.snapshot();
+            img.src = dataUrl;
             img.classList.add('img-ori');
             imgParent.classList.add('img-ori-parent');
             imgParent.setAttribute('data-author', user);                
@@ -130,11 +130,13 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
                 let keys = Object.keys(snapshotFb);
                 currentKey = keys[0];
                 currentDraw = snapshotFb[keys[0]];
+                let dataUrl = legoCanvas.snapshot();
+                currentDraw.dataUrl = dataUrl;
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
                 fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
                 fireBaseLego.database().ref("/drawValidatedShow").push(currentDraw);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
-                setTimeout(()=>generateSnapshot(currentDraw.user),2000);
+                setTimeout(()=>generateSnapshot(currentDraw.user, dataUrl),2000);
             }else{
                 readyForNewDraw = true;
                 document.getElementById('proposition-text').innerHTML = "En attente de proposition";
