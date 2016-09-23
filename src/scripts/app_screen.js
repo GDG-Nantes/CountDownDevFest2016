@@ -138,6 +138,8 @@ import {AudioPlayer} from './audio/player.js';
                 currentDraw = snapshotFb[keys[0]];
                 let dataUrl = legoCanvas.snapshot();
                 currentDraw.dataUrl = dataUrl;
+                delete currentDraw.instructions;
+                delete currentDraw.userId;
                 legoCanvas.drawInstructions(snapshotFb[keys[0]]);
                 fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
                 fireBaseLego.database().ref("/drawValidatedShow").push(currentDraw);
