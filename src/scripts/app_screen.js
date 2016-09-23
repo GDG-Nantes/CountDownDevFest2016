@@ -18,9 +18,7 @@ import {AudioPlayer} from './audio/player.js';
      readyForNewDraw = true,
      audioPlayer = null;
 
-    function initGame(){
-
-        
+    function initGame(){        
 
         legoCanvas = new LegoGridCanvas('canvasDraw', false);
 
@@ -130,19 +128,23 @@ import {AudioPlayer} from './audio/player.js';
         readyForNewDraw = false;
          fireBaseLego.database().ref('drawValidated').once('value', function(snapshot){
             if (snapshot && snapshot.val()){
+                // First we get the draw
                 currentDraw = snapshot;
                 let snapshotFb = snapshot.val();
                 console.info(snapshotFb);
                 let keys = Object.keys(snapshotFb);
                 currentKey = keys[0];
                 currentDraw = snapshotFb[keys[0]];
+                legoCanvas.drawInstructions(snapshotFb[keys[0]]);
+
+                // After we update the draw
                 let dataUrl = legoCanvas.snapshot();
                 currentDraw.dataUrl = dataUrl;
                 delete currentDraw.instructions;
+                fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
                 delete currentDraw.userId;
-                legoCanvas.drawInstructions(snapshotFb[keys[0]]);
                 fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
-                fireBaseLego.database().ref("/drawValidatedShow").push(currentDraw);
+                fireBaseLego.database().ref("/drawShow").push(currentDraw);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
                 setTimeout(()=>generateSnapshot(currentDraw.user, dataUrl),2000);
             }else{

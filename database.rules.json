@@ -5,20 +5,26 @@
       ".write": false
     },
     "draw": {
-      ".read": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true",
+      ".read": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true",
       ".write": "auth != null"
     },
     "drawValidated":{
-      ".read": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true",
-      ".write": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true"
+      ".read": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true",
+      ".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"
     },
-    "drawRejected":{
-      ".read": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true",
-      ".write": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true"
+    "drawReject":{
+      ".read": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true",
+      ".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"
     },
-    "drawValidatedShow":{
+    "drawShow":{
       ".read": true,
-      ".write": "auth != null && root.child('admins').child(auth.token.email).exists() && auth.token.email_verified == true"
+      ".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"
+    },
+    "drawSaved":{
+      "$userId":{
+      	".read": "auth != null && $userId === auth.uid",
+      	".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"  
+      }
     }
   }
 }
