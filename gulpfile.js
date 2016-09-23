@@ -13,6 +13,9 @@ var browserify = require("browserify");
 var source = require('vinyl-source-stream');
 var reload = browserSync.reload;
 
+var runSequence = require('run-sequence');
+
+
 var extensions = ['.js','.json','.es6'];
 
 gulp.task('watch',['browserify', 'sass'], function(){
@@ -68,6 +71,23 @@ gulp.task('browserify_screen',function(){
     .pipe(gulp.dest('./src'));
 });
 
+gulp.task("copy", function () {
+   return gulp.src([
+        "src/*.html",
+        "src/*.js",
+        "src/css/**", 
+        "src/assets/**", 
+        ],{"base":"./src"})
+    .pipe(gulp.dest('./public/'));
+});
+
+
+gulp.task('build',function(){
+  runSequence(
+    ['browserify', 'sass'],
+    'copy'
+  );  
+});
 
 /* Default task */
 gulp.task("default", ["watch"]);
