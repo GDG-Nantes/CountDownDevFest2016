@@ -41,6 +41,12 @@ canvas{
     justify-content: center;
     flex-direction: column;
     position: relative;
+
+    button{
+        align-self: center;
+        width:200px;
+        margin: 20px;
+    }
 }
 
 $img-user : 80px;
