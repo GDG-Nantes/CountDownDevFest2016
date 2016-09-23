@@ -4,5 +4,8 @@ appengine-generated/
 dist/
 src/css/
 node_modules/
+public/
 
+
+.firebaserc
 bundle*
