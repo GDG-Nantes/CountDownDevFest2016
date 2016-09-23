@@ -29,9 +29,7 @@
     "gulp-sass": "^2.3.2",
     "gulp-sourcemaps": "^1.6.0",
     "gulp-util": "^3.0.7",
-    "vinyl-source-stream": "^1.0.0"
-  },
-  "dependencies": {
+    "vinyl-source-stream": "^1.0.0",
     "run-sequence": "^1.2.2"
   }
 }
