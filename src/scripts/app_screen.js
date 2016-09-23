@@ -113,9 +113,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         }else{
             let diff = cibleDate.diff(moment());
             minutesElt.innerHTML = new Intl.NumberFormat("fr", {minimumIntegerDigits : 2, useGrouping:false})
-                            .format(Math.round(diff / (60 * 1000)));
+                            .format(Math.floor(diff / (60 * 1000)));
             secondsElt.innerHTML = new Intl.NumberFormat("fr", {minimumIntegerDigits : 2, useGrouping:false})
-                            .format(Math.round(diff % (60 * 1000) / 1000));
+                            .format(Math.floor(diff % (60 * 1000) / 1000));
 
             window.requestAnimationFrame(checkTime);
         }
