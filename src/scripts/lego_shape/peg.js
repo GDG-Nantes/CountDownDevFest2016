@@ -11,6 +11,7 @@ export class Peg{
         this.top = top || cellSize;
         this.left = left;
         this.angle = angle || 0;
+        this.circleArray = [];
 
 
         this.rectBasic = new fabric.Rect({
@@ -25,31 +26,58 @@ export class Peg{
         });
 
 
-        this.circleGroup = new Circle(cellSize, color);
         let arrayElts = [this.rectBasic];
+        let circleGroup = new Circle(cellSize, color);
+    console.info(circleGroup.canvasElt.top, cellSize, cellSize / 2);
+        this.circleArray.push(circleGroup);       
         if (size.col === 2){
-            this.circleGroup2 = new Circle(cellSize, color);
-            this.circleGroup.canvasElt.set({
+            circleGroup.canvasElt.set({
                 left: -cellSize + 5
             });
-            this.circleGroup2.canvasElt.set({
+            if (size.row === 2){
+                circleGroup.canvasElt.set({
+                    top : (-cellSize +5)
+                });
+            }
+            circleGroup = new Circle(cellSize, color);
+            circleGroup.canvasElt.set({
                 left: 0
             });
-            arrayElts.push(this.circleGroup.canvasElt);
-            arrayElts.push(this.circleGroup2.canvasElt);
-        }else{
-            arrayElts.push(this.circleGroup.canvasElt);
+            if (size.row === 2){
+                circleGroup.canvasElt.set({
+                    top : (-cellSize +5)
+                });
+            }
+            this.circleArray.push(circleGroup);
+            if (size.row === 2){
+                circleGroup = new Circle(cellSize, color);
+                circleGroup.canvasElt.set({
+                    left: -cellSize + 5,
+                    top: 0
+                });
+                this.circleArray.push(circleGroup);
+                circleGroup = new Circle(cellSize, color);
+                circleGroup.canvasElt.set({
+                    left: 0,
+                    top : 0
+                });
+                this.circleArray.push(circleGroup);
+            }
+            
         }
+
+        this.circleArray.forEach((circle)=>arrayElts.push(circle.canvasElt));
+        
             
 
         this.group = new fabric.Group(arrayElts, {
             left: this.left,
             top: this.top,
             angle: this.angle,
-            lockRotation : this.size.col === 1 && this.size.row === 1,
+            lockRotation : true,
             lockScalingX : true,
             lockScalingY : true,
-            hasControls : this.size.col != 1 || this.size.row != 1,
+            hasControls : false,
         });
 
         this.group.parentPeg = this;        
@@ -70,10 +98,7 @@ export class Peg{
     changeColor(color){
         this.color = color;
         this.rectBasic.set('fill', color);
-        this.circleGroup.changeColor(color);
-        if (this.size.col === 2){
-            this.circleGroup2.changeColor(color);
-        }
+        this.circleArray.forEach((circle)=> circle.changeColor(color));        
     }
 
     move(left, top){

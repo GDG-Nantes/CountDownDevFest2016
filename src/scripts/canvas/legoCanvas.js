@@ -45,9 +45,15 @@ export class LegoGridCanvas {
                     peg.toRemove = false;
                     if (!peg.replace) {
                         if (peg.size.col === 2) {
-                            this.canvas.add(this._createRect().canvasElt);
+                            if (peg.size.row === 2){
+                                this.canvas.add(this._createSquare(2).canvasElt);
+                            }else if (peg.angle === 0){
+                                this.canvas.add(this._createRect(1).canvasElt);
+                            }else{
+                                this.canvas.add(this._createRect(1,90).canvasElt);
+                            }
                         } else {
-                            this.canvas.add(this._createSquare().canvasElt);
+                            this.canvas.add(this._createSquare(1).canvasElt);
                         }
                         peg.replace = true;
                     }
@@ -165,8 +171,10 @@ export class LegoGridCanvas {
 
         if (this.showRow){
             this.canvas.add(
-                this._createSquare().canvasElt
-                , this._createRect().canvasElt
+                this._createSquare(1).canvasElt
+                , this._createSquare(2).canvasElt
+                , this._createRect(1).canvasElt
+                , this._createRect(1,90).canvasElt
             );
         }
     }
@@ -225,12 +233,21 @@ export class LegoGridCanvas {
         });   
     }
 
-    _createRect() {
-        return this._createBrick({size : {col : 2, row :1}, left : (this.canvasRect.width / 2) - 3 * this.cellSize});
+    _createRect(sizeRect, angle) {
+        return this._createBrick({
+                size : {col : 2 * sizeRect, row :1 * sizeRect}, 
+                left : angle ? (2 * this.cellSize) : (this.canvasRect.width / 2) + this.cellSize,
+                top : angle ? 1 : 0,
+                angle : angle
+            });
     }
 
-    _createSquare() {
-        return this._createBrick({size : {col : 1, row :1}, left: (this.canvasRect.width / 2) + (1 * this.cellSize)});
+    _createSquare(sizeSquare) {
+        return this._createBrick({
+                size : {col : 1 * sizeSquare, row :1 * sizeSquare}, 
+                left: sizeSquare === 2 ? ((this.canvasRect.width / 2) - (2.5 * this.cellSize)) : (this.canvasRect.width - (2 * this.cellSize)),
+                top : sizeSquare === 2 ? 1 : 0,
+            });
     }
 
     _createBrick(options) {
