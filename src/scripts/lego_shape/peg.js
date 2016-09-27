@@ -2,7 +2,7 @@
 import {Circle} from './circle.js';
 
 export class Peg{
-    constructor(size, cellSize, color, left, top, angle){
+    constructor({size = {col : 1, row : 1}, cellSize = 0, color = '#FFF', left = 0, top = 0, angle = 0}){
         this.size = size;
         this.id = `Peg${size}-${Date.now()}`;
         this.isReplace = false;
@@ -14,8 +14,8 @@ export class Peg{
 
 
         this.rectBasic = new fabric.Rect({
-            width: cellSize * size,
-            height: cellSize,
+            width: cellSize * size.col,
+            height: cellSize * size.row,
             fill: color,
             originX: 'center',
             originY: 'center',
@@ -27,7 +27,7 @@ export class Peg{
 
         this.circleGroup = new Circle(cellSize, color);
         let arrayElts = [this.rectBasic];
-        if (size === 2){
+        if (size.col === 2){
             this.circleGroup2 = new Circle(cellSize, color);
             this.circleGroup.canvasElt.set({
                 left: -cellSize + 5
@@ -46,10 +46,10 @@ export class Peg{
             left: this.left,
             top: this.top,
             angle: this.angle,
-            lockRotation : this.size === 1,
+            lockRotation : this.size.col === 1 && this.size.row === 1,
             lockScalingX : true,
             lockScalingY : true,
-            hasControls : this.size != 1,
+            hasControls : this.size.col != 1 || this.size.row != 1,
         });
 
         this.group.parentPeg = this;        
@@ -71,7 +71,7 @@ export class Peg{
         this.color = color;
         this.rectBasic.set('fill', color);
         this.circleGroup.changeColor(color);
-        if (this.size === 2){
+        if (this.size.col === 2){
             this.circleGroup2.changeColor(color);
         }
     }

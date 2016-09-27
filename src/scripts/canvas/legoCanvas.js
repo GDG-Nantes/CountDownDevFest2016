@@ -44,7 +44,7 @@ export class LegoGridCanvas {
                 } else {
                     peg.toRemove = false;
                     if (!peg.replace) {
-                        if (peg.size === 2) {
+                        if (peg.size.col === 2) {
                             this.canvas.add(this._createRect().canvasElt);
                         } else {
                             this.canvas.add(this._createSquare().canvasElt);
@@ -123,12 +123,12 @@ export class LegoGridCanvas {
         this.canvas.renderOnAddRemove = false;
         instructionObject.instructions.forEach((instruction)=>{
             this.canvas.add(
-                this._createBrick(instruction.size, 
-                    (instruction.left / instruction.cellSize) * this.cellSize,
-                    (instruction.top / instruction.cellSize) * this.cellSize,
-                    instruction.angle,
-                    instruction.color
-                    ).canvasElt
+                this._createBrick({ size : instruction.size, 
+                    left : (instruction.left / instruction.cellSize) * this.cellSize,
+                    top : (instruction.top / instruction.cellSize) * this.cellSize,
+                    angle : instruction.angle,
+                    color : instruction.color
+                }).canvasElt
                 );            
         });
 
@@ -226,17 +226,19 @@ export class LegoGridCanvas {
     }
 
     _createRect() {
-        return this._createBrick(2, (this.canvasRect.width / 2) - 3 * this.cellSize);
+        return this._createBrick({size : {col : 2, row :1}, left : (this.canvasRect.width / 2) - 3 * this.cellSize});
     }
 
     _createSquare() {
-        return this._createBrick(1, (this.canvasRect.width / 2) + (1 * this.cellSize));
+        return this._createBrick({size : {col : 1, row :1}, left: (this.canvasRect.width / 2) + (1 * this.cellSize)});
     }
 
-    _createBrick(size, left, top, angle, color) {
-        let peg = new Peg(size, this.cellSize, color || this.lastColor, left, top, angle);
+    _createBrick(options) {
+        options.cellSize = this.cellSize;
+        options.color = options.color || this.lastColor;
+        let peg = new Peg(options);
         this.brickModel[peg.id] = peg;
-        if (size == 1) {
+        if (options.size == 1) {
             this.rowSelect.square = peg;
         } else {
             this.rowSelect.rect = peg;
