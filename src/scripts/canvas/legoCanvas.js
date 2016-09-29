@@ -75,21 +75,6 @@ export class LegoGridCanvas {
                 }
             });
 
-            this.canvas.on('object:rotating', (options) => {
-                let peg = options.target.parentPeg;
-
-                if ((options.target.angle > 0 && options.target.angle < 45)
-                    || (options.target.angle < 360 && options.target.angle >= 315)) {
-                    peg.rotate(0);
-                } else if (options.target.angle >= 45 && options.target.angle < 135) {
-                    peg.rotate(90);
-                } else if (options.target.angle >= 135 && options.target.angle < 225) {
-                    peg.rotate(180);
-                } else if (options.target.angle >= 225 && options.target.angle < 315) {
-                    peg.rotate(270);
-                }
-            });
-
         }
     }
 
