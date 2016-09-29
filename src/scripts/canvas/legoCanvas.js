@@ -236,7 +236,7 @@ export class LegoGridCanvas {
     _createRect(sizeRect, angle) {
         return this._createBrick({
                 size : {col : 2 * sizeRect, row :1 * sizeRect}, 
-                left : angle ? (2 * this.cellSize) : (this.canvasRect.width / 2) + this.cellSize,
+                left : angle ? ((this.canvasRect.width / 4) - this.cellSize) : ((this.canvasRect.width * 3 / 4) - (this.cellSize * 1.5)),
                 top : angle ? 1 : 0,
                 angle : angle
             });
@@ -245,7 +245,7 @@ export class LegoGridCanvas {
     _createSquare(sizeSquare) {
         return this._createBrick({
                 size : {col : 1 * sizeSquare, row :1 * sizeSquare}, 
-                left: sizeSquare === 2 ? ((this.canvasRect.width / 2) - (2.5 * this.cellSize)) : (this.canvasRect.width - (2 * this.cellSize)),
+                left: sizeSquare === 2 ? ((this.canvasRect.width / 2) - (2 * this.cellSize)) : (this.canvasRect.width - (this.cellSize * 1.5)),
                 top : sizeSquare === 2 ? 1 : 0,
             });
     }
