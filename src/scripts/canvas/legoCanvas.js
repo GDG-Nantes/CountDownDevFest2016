@@ -36,10 +36,20 @@ export class LegoGridCanvas {
                 let peg = options.target.parentPeg;
 
 
-                if (options.target.top < HEADER_HEIGHT
-                    || options.target.left < 0
-                    || options.target.top + this.cellSize > this.canvasElt.height
-                    || options.target.left + this.cellSize > this.canvasElt.width) {
+                let newLeft = Math.round(options.target.left / this.cellSize) * this.cellSize;
+                let newTop = Math.round((options.target.top - this.headerHeight) / this.cellSize) * this.cellSize + this.headerHeight;                  
+                // We have to calculate the top
+                let topCompute = newTop + (peg.size.row === 2 || peg.angle > 0 ? this.cellSize * 2 : this.cellSize);
+                let leftCompute = newLeft + (peg.size.col === 2 ? this.cellSize * 2 : this.cellSize);
+                peg.move(
+                    newLeft, //left
+                    newTop // top
+                );
+
+                if (newTop < HEADER_HEIGHT
+                    || newLeft < 0
+                    || topCompute >= this.canvasElt.height
+                    || leftCompute >= this.canvasElt.width) {
                     peg.toRemove = true;
                 } else {
                     peg.toRemove = false;
@@ -58,10 +68,6 @@ export class LegoGridCanvas {
                         peg.replace = true;
                     }
                 }
-                peg.move(
-                    Math.round(options.target.left / this.cellSize) * this.cellSize, //left
-                    Math.round((options.target.top - this.headerHeight) / this.cellSize) * this.cellSize + this.headerHeight // top
-                );
 
             });
 
@@ -79,12 +85,11 @@ export class LegoGridCanvas {
     }
 
     changeColor(color) {
-        this.lastColor = color;
-        if (this.currentBrick) {
-            this.currentBrick.parentPeg.changeColor(color);
-        }
+        this.lastColor = color;       
         this.rowSelect.square.changeColor(color);
+        this.rowSelect.bigSquare.changeColor(color);
         this.rowSelect.rect.changeColor(color);
+        this.rowSelect.vertRect.changeColor(color);
         this.canvas.renderAll();
     }
 
@@ -240,10 +245,14 @@ export class LegoGridCanvas {
         options.color = options.color || this.lastColor;
         let peg = new Peg(options);
         this.brickModel[peg.id] = peg;
-        if (options.size == 1) {
-            this.rowSelect.square = peg;
-        } else {
+        if (options.size.row === 2) {
+            this.rowSelect.bigSquare = peg;
+        } else if (options.angle) {
+            this.rowSelect.vertRect = peg;
+        } else if (options.size.col === 2) {
             this.rowSelect.rect = peg;
+        } else {
+            this.rowSelect.square = peg;
         }
         return peg;
     }
