@@ -1,0 +1,23 @@
+{
+    "name": "Legonnary - Moderator",
+    "short_name": "Moderator",
+    "icons": [{
+            "src": "./assets/img/launcher_moderator_144.png",
+            "type": "image/png",
+            "sizes": "144x144"
+        }, {
+            "src": "./assets/img/launcher_moderator_192.png",
+            "type": "image/png",
+            "sizes": "192x192"
+        }, {
+            "src": "./assets/img/launcher_moderator_512.png",
+            "type": "image/png",
+            "sizes": "512x512"
+        }
+    ],
+    "start_url": "./moderator.html",
+    "display": "standalone",
+    "orientation": "portrait",
+    "background_color": "#673ab7",
+    "theme_color": "#673ab7"
+}

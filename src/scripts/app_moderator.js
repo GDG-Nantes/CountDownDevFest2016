@@ -89,4 +89,10 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
 
     window.addEventListener('load', pageLoad);
+
+    if ('serviceWorker' in navigator) {        
+        navigator.serviceWorker.register('./service-worker-moderator.js', {scope : location.pathname}).then(function(reg) {
+            console.log('Service Worker Register for scope : %s',reg.scope);
+        });
+    }
 })();
