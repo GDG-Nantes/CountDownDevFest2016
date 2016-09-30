@@ -140,6 +140,7 @@ import {AudioPlayer} from './audio/player.js';
                 // After we update the draw
                 let dataUrl = legoCanvas.snapshot();
                 currentDraw.dataUrl = dataUrl;
+                currentDraw.accepted = true;
                 delete currentDraw.instructions;
                 fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
                 delete currentDraw.userId;

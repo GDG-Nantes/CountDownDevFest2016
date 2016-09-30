@@ -51,7 +51,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
              currentDraw.dataUrl = dataUrl;
              delete currentDraw.instructions;
              fireBaseLego.database().ref(`draw/${currentKey}`).remove();
-             fireBaseLego.database().ref(`/drawReject/${currentDraw.userId}`).push(currentDraw);
+             fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
              legoCanvas.resetBoard();
              getNextDraw();
         });

@@ -51,11 +51,12 @@
         <div class="mdl-layout__drawer">
             <img src="./assets/img/lego_painter_128.png" id="img-user" hiddden><span id="name-user" class="mdl-layout-title">Non Connecté</span>
             <nav class="mdl-navigation">
-                <a class="mdl-navigation__link" href="">Mes créations</a>
+                <a class="mdl-navigation__link" id="menu-game" href="#" hidden>Jeu</a>
+                <a class="mdl-navigation__link" id="menu-creations" href="#">Mes créations</a>
             </nav>
         </div>
         <main class="mdl-layout__content">
-            <div class="page-content">                
+            <div class="page-content">
                 <div id="login-msg" class="demo-card-wide mdl-card mdl-shadow--2dp">
                     <div class="mdl-card__title">
                         <h2 class="mdl-card__title-text">Login</h2>
@@ -82,9 +83,6 @@
                     </div>
                 </div>
                 <div id="game" hidden>
-                    <!--<button id="color-picker" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored">
-                    <i class="material-icons">color_lens</i>
-                </button>-->
                     <canvas id="canvasDraw"></canvas>
                     <button id="btnSubmission" class="mdl-button mdl-js-button mdl-button--raised mdl-js-ripple-effect mdl-button--accent">
                     Soumettre
@@ -93,6 +91,11 @@
                 <div id="loading" hidden>
                     <div class="mdl-spinner mdl-spinner--single-color mdl-js-spinner is-active"></div>
                 </div>
+            </div>
+            <div id="submitted" hidden>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="btnLeft"> <i class="material-icons">keyboard_arrow_left</i></button>
+                <div class="parent-img"> <img id="imgSubmission"></div>
+                <button class="mdl-button mdl-js-button mdl-button--raised mdl-button--colored mdl-js-ripple-effect" id="btnRight"> <i class="material-icons">keyboard_arrow_right</i></button>
             </div>
         </main>
     </div>
