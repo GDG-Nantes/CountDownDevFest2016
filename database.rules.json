@@ -13,8 +13,10 @@
       ".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"
     },
     "drawReject":{
-      ".read": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true",
-      ".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"
+      "$userId":{
+      	".read": "auth != null && $userId === auth.uid",
+      	".write": "auth != null && root.child('admins').child(auth.token.email.replace('.', '*')).exists() && auth.token.email_verified == true"  
+      }
     },
     "drawShow":{
       ".read": true,

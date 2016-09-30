@@ -47,8 +47,11 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         });
 
         document.getElementById('btnSubmissionRefused').addEventListener('click', ()=>{
+             let dataUrl = legoCanvas.snapshot();
+             currentDraw.dataUrl = dataUrl;
+             delete currentDraw.instructions;
              fireBaseLego.database().ref(`draw/${currentKey}`).remove();
-             fireBaseLego.database().ref("/drawReject").push(currentDraw);
+             fireBaseLego.database().ref(`/drawReject/${currentDraw.userId}`).push(currentDraw);
              legoCanvas.resetBoard();
              getNextDraw();
         });
