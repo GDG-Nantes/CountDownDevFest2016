@@ -8,6 +8,7 @@ var browserSync = require("browser-sync").create();
 var sass = require('gulp-sass');
 var babelify = require('babelify');
 var gutil = require('gulp-util');
+var replace = require('gulp-replace');
 
 var browserify = require("browserify");
 var source = require('vinyl-source-stream');
@@ -82,11 +83,19 @@ gulp.task("copy", function () {
     .pipe(gulp.dest('./public/'));
 });
 
+gulp.task("replace", function(){
+  gulp.src(['./public/bundle_phone.js', './public/bundle_moderator.js'])
+  .pipe(replace('/* SERVICE_WORKER_REPLACE', ''))
+  .pipe(replace('SERVICE_WORKER_REPLACE */', ''))
+  .pipe(gulp.dest('./public/'));
+});
+
 
 gulp.task('build',function(){
   runSequence(
     ['browserify', 'sass'],
-    'copy'
+    'copy',
+    'replace_phone'
   );  
 });
 
