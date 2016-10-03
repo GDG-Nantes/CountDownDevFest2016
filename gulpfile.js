@@ -113,7 +113,7 @@ gulp.task('build',function(){
   runSequence(
     ['browserify', 'sass'],
     'copy',
-    'replace_phone',
+    'replace',
     'replace_timestamp'
   );  
 });
