@@ -16,7 +16,8 @@ import {AudioPlayer} from './audio/player.js';
         lastLeft = false, // True if the last photo was placed at the left of the countDown
         targetDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS"), // The timeout date
         readyForNewDraw = true,
-        audioPlayer = null;
+        audioPlayer = null,
+        endShow = false;
 
     function initGame() {
 
@@ -127,13 +128,15 @@ import {AudioPlayer} from './audio/player.js';
     function checkTime() {
 
         if (moment().isAfter(targetDate)) {
-            // TODO 
+            endShow = true;
+            endCountDown();
         } else {
             let diff = targetDate.diff(moment());
             minutesElt.innerHTML = new Intl.NumberFormat("fr", { minimumIntegerDigits: 2, useGrouping: false })
                 .format(Math.floor(diff / (60 * 1000)));
             secondsElt.innerHTML = new Intl.NumberFormat("fr", { minimumIntegerDigits: 2, useGrouping: false })
                 .format(Math.floor(diff % (60 * 1000) / 1000));
+            audioPlayer.manageSoundVolume(diff);
 
             window.requestAnimationFrame(checkTime);
         }
@@ -144,6 +147,9 @@ import {AudioPlayer} from './audio/player.js';
      * Show the next draw
      */
     function getNextDraw() {
+        if (endShow){
+            return;
+        }
         readyForNewDraw = false;
         fireBaseLego.database().ref('drawValidated').once('value', function (snapshot) {
             if (snapshot && snapshot.val()) {
@@ -179,6 +185,9 @@ import {AudioPlayer} from './audio/player.js';
     }
 
 
+    function endCountDown(){
+
+    }
 
 
     window.addEventListener('load', pageLoad);
