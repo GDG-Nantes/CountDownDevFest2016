@@ -1,0 +1,45 @@
+@import "common";
+
+
+#game, #parent-snapshots{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    position: relative;
+    overflow: scroll;
+}
+
+$size-photo: 200px;
+
+.img-ori-parent{
+    position: relative;
+    width:$size-photo+40px;
+    height: $size-photo+100px;
+    background:white;
+    box-shadow       : 0px 0px 5px 0px rgba(50, 50, 50, 0.75);    
+}
+
+.img-ori{    
+    position:absolute;
+    top:20px;
+    left:20px;
+    width:$size-photo;
+    height:$size-photo;
+    background-size: contain;
+    background-repeat: no-repeat;
+    box-shadow       : 0px 0px 5px 0px rgba(0, 0, 0, 1.5) inset;    
+}
+
+.img-ori-parent::after{
+    content:attr(data-author);
+    position: absolute;
+    width:100%;
+    text-align:center;
+    bottom: 15pt;
+    left: 0;
+    font-size:20pt;
+    line-height:20pt;
+    font-family:"Roboto","Helvetica","Arial",sans-serif;
+}

@@ -40,7 +40,7 @@ gulp.task('sass',function(){
   .pipe(reload({stream:true}));  
 });
 
-gulp.task('browserify', ['browserify_phone', 'browserify_moderator', 'browserify_screen']);
+gulp.task('browserify', ['browserify_phone', 'browserify_moderator', 'browserify_screen', 'browserify_summary']);
 
 gulp.task('browserify_phone',function(){
   return browserify({entries: './src/scripts/app_phone.js', debug:true, extensions: extensions})
@@ -71,6 +71,18 @@ gulp.task('browserify_screen',function(){
     .pipe(source('bundle_screen.js'))
     .pipe(gulp.dest('./src'));
 });
+
+
+gulp.task('browserify_summary',function(){
+  return browserify(['./src/scripts/app_summary.js'], {debug:true})
+    .transform(babelify)
+    .on('error', gutil.log)    
+    .bundle()    
+    .on('error', gutil.log)    
+    .pipe(source('bundle_summary.js'))
+    .pipe(gulp.dest('./src'));
+});
+
 
 gulp.task("copy", function () {
    return gulp.src([
