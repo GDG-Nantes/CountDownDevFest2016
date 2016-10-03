@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * Class for generic management of Authentication with firebase.
+ * 
+ * It takes care of html to hide or show
+ */
 export class FireBaseAuth{
     constructor(config){
       
@@ -46,10 +51,18 @@ export class FireBaseAuth{
         document.getElementById(this.idLogout).addEventListener('click', ()=>  firebase.auth().signOut());
     }
 
+    /**
+     * In case of error
+     */
     _checkCallBackErrorContext(error){
         console.error(error);
     }
 
+    /**
+     * Callback method with the state of connection
+     * 
+     * According to 'user', it will show or hide some html areas
+     */
     _checkCallBackContext(user){
         this.user = user;
         if (user){
@@ -78,15 +91,24 @@ export class FireBaseAuth{
       
     }
 
+    /**
+     * Registration of callback for futur interaction.
+     * The callback method will be called with user as parameter
+     */
     onAuthStateChanged(cb){
         this.cbAuthChanged = cb;
     }
 
-
+    /**
+     * Show the name of the current logged user
+     */
     displayName(){
         return this.user ? this.user.displayName : null;
     }
 
+    /**
+     * Show the id of the current logged user
+     */
     userId(){
         return this.user ? this.user.uid : null;
     }

@@ -1,6 +1,11 @@
 'use strict'
 import {PLAYLIST} from './playlist.js';
 
+/**
+ * Class for playing music
+ * 
+ * We create an insible audio element and we play music on it
+ */
 export class AudioPlayer{
     constructor(){
         this.indexPlayList = 0;
@@ -10,12 +15,18 @@ export class AudioPlayer{
         this._nextSong();
     }
 
+    /**
+     * Play a song according to the url of song
+     */
     _playSound(url){
         this.audioElt.pause();
         this.audioElt.src = url;
         this.audioElt.play();
     }
 
+    /**
+     * Skip to the next song
+     */
     _nextSong(){
         try{
             this._playSound(`audio/${PLAYLIST[this.indexPlayList]}`);
@@ -25,6 +36,9 @@ export class AudioPlayer{
         }
     }
 
+    /**
+     * Update the sound volume of audio element
+     */
     manageSoundVolume(delta){
         if (delta < 10 * 1000){
             this.audioElt.volume = Math.min(Math.max(0,delta / (10 * 1000)),0.5);

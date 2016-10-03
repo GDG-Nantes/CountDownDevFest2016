@@ -4,29 +4,41 @@ import {Circle} from '../lego_shape/circle.js';
 import {NB_CELLS, HEADER_HEIGHT, BASE_LEGO_COLOR, BACKGROUND_LEGO_COLOR} from '../common/const.js';
 import {legoBaseColor} from '../common/legoColors.js';
 
+/**
+ * 
+ * Class for Canvas Grid
+ * 
+ */
 export class LegoGridCanvas {
     constructor(id, showRow) {
+        // Basic canvas
         this.canvasElt = document.getElementById(id);
+        // Size of canvas
         this.canvasRect = this.canvasElt.getBoundingClientRect();
+        // Indicator for showing the first row with pegs
         this.showRow = showRow;
         this.canvasElt.width = this.canvasRect.width;
+        // According to showRow, we will show modify the header Height
         this.headerHeight = this.showRow ? HEADER_HEIGHT : 0;
         this.canvasElt.height = this.canvasRect.width + this.headerHeight;
-
+        // We calculate the cellsize according to the space taken by the canvas
         this.cellSize = Math.round(this.canvasRect.width / NB_CELLS);
 
+        // We initialize the Fabric JS library with our canvas
         this.canvas = new fabric.Canvas(id, { selection: false });
-        this.rowSelect = {
-            square: null,
-            rect: null
-        };
+        // Object that represent the pegs on the first row
+        this.rowSelect = {};
+        // The current draw model (instructions, ...)
         this.brickModel = {},
-            this.createNewBrick = false;
+        // Flag to determine if we have to create a new brick
+        this.createNewBrick = false;
         this.currentBrick = null;
         this.lastColor = BASE_LEGO_COLOR;
 
+        // We create the canvas
         this._drawCanvas();
 
+        // If we show the row, we have to plug the move management
         if (showRow) {
 
             this.canvas.on('object:selected', (options) => this.currentBrick = options.target.parentPeg ? options.target : null);
@@ -46,12 +58,14 @@ export class LegoGridCanvas {
                     newTop // top
                 );
 
+                // We specify that we could remove a peg if one of it's edge touch the outside of the canvas
                 if (newTop < HEADER_HEIGHT
                     || newLeft < 0
                     || topCompute >= this.canvasElt.height
                     || leftCompute >= this.canvasElt.width) {
                     peg.toRemove = true;
                 } else {
+                    // Else we check we create a new peg (when a peg enter in the draw area)
                     peg.toRemove = false;
                     if (!peg.replace) {
                         if (peg.size.col === 2) {
@@ -84,6 +98,9 @@ export class LegoGridCanvas {
         }
     }
 
+    /**
+     * Method for changing the color of the first row 
+     */
     changeColor(color) {
         this.lastColor = color;       
         this.rowSelect.square.changeColor(color);
@@ -93,6 +110,9 @@ export class LegoGridCanvas {
         this.canvas.renderAll();
     }
 
+    /**
+     * Serialize the canvas to a minimal object that could be treat after
+     */
     export(userName, userId) {
         let resultArray = []
         Object.keys(this.brickModel).forEach((key) => {
@@ -113,6 +133,9 @@ export class LegoGridCanvas {
         };
     }
 
+    /**
+     * Draw from intructions a draw
+     */
     drawInstructions(instructionObject){
         this.canvas.clear();
         this._drawCanvas();
@@ -132,33 +155,33 @@ export class LegoGridCanvas {
         this.canvas.renderOnAddRemove = true;
     }
 
+    /**
+     * Clean the board and the state of the canvas
+     */
     resetBoard(){
         this.brickModel = {};
         this.canvas.clear();
         this._drawCanvas();
     }
 
+    /** 
+     * Generate a Base64 image from the canvas
+     */
     snapshot(){
         return this.canvas.toDataURL();
     }
 
+    /**
+     * 
+     * Privates Methods
+     * 
+     */
 
-    _drawGrid(size) {
-        /*let max = Math.round(size / this.cellSize);
-        let maxSize = max * this.cellSize;
-        // Rows
-        this.canvas.add(new fabric.Line([0 * this.cellSize, this.headerHeight, 0 * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-        this.canvas.add(new fabric.Line([max * this.cellSize - 1, this.headerHeight, max * this.cellSize - 1, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-        // Cols
-        this.canvas.add(new fabric.Line([0, 0 * this.cellSize + this.headerHeight, maxSize, 0 * this.cellSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-        this.canvas.add(new fabric.Line([0, max * this.cellSize + this.headerHeight - 1, maxSize, max * this.cellSize + this.headerHeight - 1], { stroke: '#ccc', selectable: false }));*/
-        /*for (var i = 0; i <= max; i++) {          
-            // Rows
-            this.canvas.add(new fabric.Line([i * this.cellSize, this.headerHeight, i * this.cellSize, maxSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-            // Cols
-            this.canvas.add(new fabric.Line([0, i * this.cellSize + this.headerHeight, maxSize, i * this.cellSize + this.headerHeight], { stroke: '#ccc', selectable: false }));
-        }*/
 
+    /**
+     * Draw the basic grid 
+    */
+    _drawGrid(size) {       
         if (this.showRow){
             this.canvas.add(
                 this._createSquare(1).canvasElt
@@ -169,7 +192,11 @@ export class LegoGridCanvas {
         }
     }
 
+    /**
+     * Draw all the white peg of the grid
+     */
     _drawWhitePeg(size){
+        // We stop rendering on each add, in order to save performances
         this.canvas.renderOnAddRemove = false;
         let max = Math.round(size / this.cellSize);
         let maxSize = max * this.cellSize;
@@ -186,8 +213,6 @@ export class LegoGridCanvas {
                 });
                 let circle = new Circle(this.cellSize, BACKGROUND_LEGO_COLOR);
                 circle.canvasElt.set({
-                    //left: this.cellSize * col  + (this.cellSize / 4) -2.5,
-                    //top : this.cellSize * row + this.headerHeight + (this.cellSize / 4) -2.5,
                     lockRotation : true,
                     lockScalingX : true,
                     lockScalingY : true,
@@ -213,6 +238,7 @@ export class LegoGridCanvas {
         }
         this.canvas.renderAll();
         this.canvas.renderOnAddRemove = true;
+        // We transform the canvas to a base64 image in order to save performances.
         let url = this.canvas.toDataURL();
         this.canvas.clear();     
         this.canvas.setBackgroundImage(url,this.canvas.renderAll.bind(this.canvas), {
@@ -223,6 +249,9 @@ export class LegoGridCanvas {
         });   
     }
 
+    /**
+     * Create a horizontal or vertical rectangle
+     */
     _createRect(sizeRect, angle) {
         return this._createBrick({
                 size : {col : 2 * sizeRect, row :1 * sizeRect}, 
@@ -232,6 +261,9 @@ export class LegoGridCanvas {
             });
     }
 
+    /**
+     * Create a square (1x1) or (2x2)
+     */
     _createSquare(sizeSquare) {
         return this._createBrick({
                 size : {col : 1 * sizeSquare, row :1 * sizeSquare}, 
@@ -240,11 +272,15 @@ export class LegoGridCanvas {
             });
     }
 
+    /**
+     * Generic method that create a peg
+     */
     _createBrick(options) {
         options.cellSize = this.cellSize;
         options.color = options.color || this.lastColor;
         let peg = new Peg(options);
         this.brickModel[peg.id] = peg;
+        // We have to update the rowSelect Object to be alsway update
         if (options.size.row === 2) {
             this.rowSelect.bigSquare = peg;
         } else if (options.angle) {
@@ -258,7 +294,9 @@ export class LegoGridCanvas {
     }
 
 
-
+    /**
+     * Init the canvas
+     */
     _drawCanvas() {
         this._drawWhitePeg(this.canvasRect.width);
         this._drawGrid(this.canvasRect.width, Math.round(this.canvasRect.width / NB_CELLS));

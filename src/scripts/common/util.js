@@ -1,5 +1,10 @@
 'use strict'
 
+/**
+ * Helper function to calculate a variation of color
+ * 
+ * From : https://www.sitepoint.com/javascript-generate-lighter-darker-color/
+ */
 export function ColorLuminance(hex, lum) {
 
         // validate hex string

@@ -8,14 +8,14 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
 (function () {
 
-    let gameInit = false,
-        fireBaseLego = null,
-        fireBaseAuth = null,
-        legoCanvas = null,
-        keys = null,
-        snapshotFb = null,
-        index = 0;
+    let gameInit = false,// true if we init the legoGrid
+        fireBaseLego = null, // the reference of the fireBaseApp
+        legoCanvas = null, // The legoGrid
+        keys = null, // The keys of firenase submit draw 
+        snapshotFb = null, // The snapshot of submit draw
+        index = 0; 
 
+    
     function initGame() {
 
         legoCanvas = new LegoGridCanvas('canvasDraw', true);
@@ -34,7 +34,8 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     function pageLoad() {
 
         fireBaseLego = new FireBaseLegoApp().app;
-        fireBaseAuth = new FireBaseAuth({
+        // We init the authentication object 
+        let fireBaseAuth = new FireBaseAuth({
             idDivLogin: 'login-msg',
             idNextDiv: 'hello-msg',
             idLogout: 'signout',
@@ -42,6 +43,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             idDisplayName: "name-user"
         });
 
+        /**
+         * Management of Cinematic Buttons
+         */
         const startBtn = document.getElementById('startBtn');
         const helpBtn = document.getElementById('help')
 
@@ -78,11 +82,19 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             })
 
 
+        /**
+         * Management of submission
+         */
+
         document.getElementById('btnSubmission').addEventListener('click', () => {
-            // TODO valider l'envoie
+            // When we submit a draw, we save it on firebase tree                        
             fireBaseLego.database().ref("/draw").push(legoCanvas.export(fireBaseAuth.displayName(), fireBaseAuth.userId()));
             legoCanvas.resetBoard();
         });
+
+        /**
+         * Management of menu items
+         */
 
         const menuGame = document.getElementById('menu-game');
         const menuCreations = document.getElementById('menu-creations');
@@ -134,6 +146,10 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             });
 
         
+        /**
+         * Management of Buttons for changing of draw
+         */
+
         const btnLeft = document.getElementById('btnLeft');
         const btnRight = document.getElementById('btnRight');
 
@@ -147,6 +163,9 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
 
     }
 
+    /**
+     * Show a draw and show it's state : Rejected or Accepted
+     */
     function draw() {
         let draw = snapshotFb[keys[index]];
         let imgSubmission = document.getElementById('imgSubmission');

@@ -1,8 +1,14 @@
 'use strict'
 import {ColorLuminance} from '../common/util.js';
 
+/**
+ * Circle Lego class
+ * The circle is composed of 2 circle (on the shadow, and the other one for the top)
+ * 
+ */
 export class Circle{
     constructor(cellSize, color){
+        
         this.circleBasic = new fabric.Circle({
             radius: (cellSize / 2) - 5,
             fill: ColorLuminance(color, -0.1),
@@ -30,10 +36,16 @@ export class Circle{
         this.group = new fabric.Group([this.circleBasicEtx, this.circleBasic, this.text]);
     }
 
+    /**
+     * Return the FabricJS element
+     */
     get canvasElt(){
         return this.group; 
     }
 
+    /**
+     * Change the color of the circle
+     */
     changeColor(color){
         this.circleBasic.set('fill', ColorLuminance(color, -0.1));
         this.circleBasicEtx.set('fill', ColorLuminance(color, 0.1));
