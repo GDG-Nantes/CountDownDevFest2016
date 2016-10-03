@@ -90,12 +90,19 @@ gulp.task("replace", function(){
   .pipe(gulp.dest('./public/'));
 });
 
+gulp.task("replace_timestamp", function(){
+  gulp.src['./public/service-worker-phone.js', './public/service-worker-moderator.js']
+  .pipe(replace('{timestamp}', Date.now()))
+  .pipe(gulp.dest('./public/'));
+})
+
 
 gulp.task('build',function(){
   runSequence(
     ['browserify', 'sass'],
     'copy',
-    'replace_phone'
+    'replace_phone',
+    'replace_timestamp'
   );  
 });
 

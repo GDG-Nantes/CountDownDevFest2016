@@ -1,7 +1,7 @@
 'use strict';
 
-let cacheFileName = "legonnaryCache-v1";
-let cacheCdnName = "legonnaryCdnCache-v1";
+let cacheFileName = "legonnaryCache-v{timestamp}";
+let cacheCdnName = "legonnaryCdnCache-v0";
 
 let filesToCache = [
     './',
