@@ -22,6 +22,7 @@ export class AudioPlayer{
         this.audioElt.pause();
         this.audioElt.src = url;
         this.audioElt.play();
+        this.audioElt.onended = this._nextSong.bind(this);
     }
 
     /**
@@ -29,7 +30,7 @@ export class AudioPlayer{
      */
     _nextSong(){
         try{
-            this._playSound(`audio/${PLAYLIST[this.indexPlayList]}`);
+            this._playSound(`./assets/audio/${PLAYLIST[this.indexPlayList]}`);
             this.indexPlayList = (this.indexPlayList + 1) % PLAYLIST.length;
         }catch(err){
             console.error(err);

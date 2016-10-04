@@ -13,6 +13,7 @@ import {AudioPlayer} from './audio/player.js';
         currentDraw = null,// The curent firebase draw
         minutesElt = null, // Html element for minutes
         secondsElt = null, // Html element for seconds
+        countDownParentElt = null, // Html element parent of minutes and seconds
         lastLeft = false, // True if the last photo was placed at the left of the countDown
         targetDate = moment('2016-11-09, 09:00:00:000', "YYYY-MM-DD, HH:mm:ss:SSS"), // The timeout date
         readyForNewDraw = true,
@@ -113,10 +114,11 @@ import {AudioPlayer} from './audio/player.js';
 
         minutesElt = document.getElementById('minutes');
         secondsElt = document.getElementById('seconds');
+        countDownParentElt = document.getElementById('count-down-text');
 
         // To remove if you want to use the target date define at the top of the class
         targetDate = moment();
-        targetDate.add(30, 'minutes');
+        targetDate.add(1, 'minutes');
         // We start our text animation
         window.requestAnimationFrame(checkTime);
 
@@ -137,6 +139,9 @@ import {AudioPlayer} from './audio/player.js';
             secondsElt.innerHTML = new Intl.NumberFormat("fr", { minimumIntegerDigits: 2, useGrouping: false })
                 .format(Math.floor(diff % (60 * 1000) / 1000));
             audioPlayer.manageSoundVolume(diff);
+            if (diff < 60 * 1000){
+                countDownParentElt.classList.add('last-minute');
+            }
 
             window.requestAnimationFrame(checkTime);
         }

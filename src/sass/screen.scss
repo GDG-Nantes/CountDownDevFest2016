@@ -122,3 +122,12 @@ $size-photo-big: $canvas-size;
     from {opacity:1;}
     to {opacity:0;}
 }
+
+.last-minute {
+    color:red;
+    animation: blink 1s linear infinite;
+}
+
+@keyframes blink {  
+    50% { opacity: 0; }
+}

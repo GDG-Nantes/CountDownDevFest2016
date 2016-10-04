@@ -1,3 +1,5 @@
 'use strict';
 
-export const PLAYLIST = [''];
+export const PLAYLIST = [
+    ''    
+];
