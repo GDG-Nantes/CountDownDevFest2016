@@ -3,6 +3,7 @@ import {FireBaseLegoApp} from './firebase/firebase.js';
 import {FireBaseAuth} from './firebase/firebaseAuth.js';
 import {LegoGridCanvas} from './canvas/legoCanvas.js';
 import {AudioPlayer} from './audio/player.js';
+import {VideoPlayer} from './video/player.js';
 
 (function () {
 
@@ -118,7 +119,8 @@ import {AudioPlayer} from './audio/player.js';
 
         // To remove if you want to use the target date define at the top of the class
         targetDate = moment();
-        targetDate.add(1, 'minutes');
+        //targetDate.add(30, 'minutes');
+        targetDate.add(5, 'seconds');
         // We start our text animation
         window.requestAnimationFrame(checkTime);
 
@@ -194,8 +196,12 @@ import {AudioPlayer} from './audio/player.js';
 
 
     function endCountDown(){
-
+        const opacityElt = document.getElementById('opacity');
+        opacityElt.classList.add('black');
+        setTimeout(()=>new VideoPlayer(opacityElt, ()=>console.log('end')).playVideo(), 4000);
     }
+
+    
 
 
     window.addEventListener('load', pageLoad);

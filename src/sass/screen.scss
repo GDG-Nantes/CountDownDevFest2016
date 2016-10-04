@@ -131,3 +131,29 @@ $size-photo-big: $canvas-size;
 @keyframes blink {  
     50% { opacity: 0; }
 }
+
+#opacity{
+    position: absolute;
+    overflow:hidden;
+    background: black;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 5s;
+    z-index: 100;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    video{
+        height: 95vh;
+    }
+}
+
+#opacity.black{
+    opacity: 1;
+}
