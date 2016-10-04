@@ -161,17 +161,21 @@ import {AudioPlayer} from './audio/player.js';
                 currentDraw = snapshotFb[keys[0]];
                 legoCanvas.drawInstructions(currentDraw);
 
-                // After we update the draw
-                let dataUrl = legoCanvas.snapshot();
-                currentDraw.dataUrl = dataUrl;
-                currentDraw.accepted = true;
-                delete currentDraw.instructions;
-                fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
-                delete currentDraw.userId;
-                fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
-                fireBaseLego.database().ref("/drawShow").push(currentDraw);
                 document.getElementById('proposition-text').innerHTML = `Proposition de ${currentDraw.user}`;
-                setTimeout(() => generateSnapshot(currentDraw.user, dataUrl), 2000);
+                setTimeout(() => {
+                    // After we update the draw
+                    let dataUrl = legoCanvas.snapshot();
+                    currentDraw.dataUrl = dataUrl;
+                    currentDraw.accepted = true;
+                    // We clean the draw before to save it
+                    delete currentDraw.instructions;
+                    fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
+                    delete currentDraw.userId;
+                    fireBaseLego.database().ref(`drawValidated/${currentKey}`).remove();
+                    fireBaseLego.database().ref("/drawShow").push(currentDraw);
+                    // We finaly generate the image
+                    generateSnapshot(currentDraw.user, legoCanvas.snapshot())
+                }, 2000);
             } else {
                 readyForNewDraw = true;
                 document.getElementById('proposition-text').innerHTML = "En attente de proposition";
