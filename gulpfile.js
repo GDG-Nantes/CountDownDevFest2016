@@ -103,7 +103,7 @@ gulp.task("replace", function(){
 });
 
 gulp.task("replace_timestamp", function(){
-  gulp.src['./public/service-worker-phone.js', './public/service-worker-moderator.js']
+  gulp.src(['./public/service-worker-phone.js', './public/service-worker-moderator.js'])
   .pipe(replace('{timestamp}', Date.now()))
   .pipe(gulp.dest('./public/'));
 })
