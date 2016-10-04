@@ -12,7 +12,7 @@ export class Peg{
         this.isReplace = false;
         this.toRemove = false;
         this.color = color;
-        this.top = top || cellSize;
+        this.top = top;
         this.left = left;
         this.angle = angle || 0;
         this.circleArray = [];

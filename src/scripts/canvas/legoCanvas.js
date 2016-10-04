@@ -114,8 +114,14 @@ export class LegoGridCanvas {
      * Serialize the canvas to a minimal object that could be treat after
      */
     export(userName, userId) {
-        let resultArray = []
-        Object.keys(this.brickModel).forEach((key) => {
+        let resultArray = [];
+        // We filter the row pegs
+        let keys = Object.keys(this.brickModel)
+            .filter((key)=>key != this.rowSelect.square.id
+                && key != this.rowSelect.bigSquare.id
+                && key != this.rowSelect.rect.id
+                && key != this.rowSelect.vertRect.id);
+        keys.forEach((key) => {
             let pegTmp = this.brickModel[key];
             resultArray.push({
                 size: pegTmp.size,
