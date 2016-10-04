@@ -46,6 +46,12 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
             }
         });
 
+        // When a draw is removed (if an other moderator validate for example) on the firebase object, we look at it
+        fireBaseLego.database().ref('draw').on('child_removed', function(data) {
+            // We force a new draw because we always show the first draw
+            getNextDraw();
+        });
+
         // We refused the current draw
         document.getElementById('btnSubmissionRefused').addEventListener('click', ()=>{
             /*
