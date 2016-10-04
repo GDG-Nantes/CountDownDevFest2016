@@ -137,8 +137,7 @@ export class LegoGridCanvas {
      * Draw from intructions a draw
      */
     drawInstructions(instructionObject){
-        this.canvas.clear();
-        this._drawCanvas();
+        this.resetBoard();
         this.canvas.renderOnAddRemove = false;
         instructionObject.instructions.forEach((instruction)=>{
             this.canvas.add(

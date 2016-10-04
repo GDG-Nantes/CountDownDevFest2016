@@ -156,11 +156,10 @@ import {AudioPlayer} from './audio/player.js';
                 // First we get the draw
                 currentDraw = snapshot;
                 let snapshotFb = snapshot.val();
-                console.info(snapshotFb);
                 let keys = Object.keys(snapshotFb);
                 currentKey = keys[0];
                 currentDraw = snapshotFb[keys[0]];
-                legoCanvas.drawInstructions(snapshotFb[keys[0]]);
+                legoCanvas.drawInstructions(currentDraw);
 
                 // After we update the draw
                 let dataUrl = legoCanvas.snapshot();
