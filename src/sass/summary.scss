@@ -1,17 +1,24 @@
 @import "common";
 
 
-#game, #parent-snapshots{
+#game, .parent-snapshots{
     display: flex;
     flex: 1;
-    justify-content: center;
+    justify-content: space-around;
     align-items: center;
     flex-direction: row;
-    position: relative;
-    overflow: scroll;
+    position: relative;    
+}
+
+#game{
+    overflow: auto;
 }
 
 $size-photo: 200px;
+
+.img-ori-parent.big{
+    margin:30px;
+}
 
 .img-ori-parent{
     position: relative;
