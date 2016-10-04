@@ -5,9 +5,9 @@
     display: flex;
     flex: 1;
     justify-content: space-around;
-    align-items: center;
     flex-direction: row;
     position: relative;    
+    flex-wrap:wrap;
 }
 
 #game{
