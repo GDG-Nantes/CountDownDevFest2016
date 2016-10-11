@@ -1,7 +1,7 @@
 'use strict';
 
 let cacheFileName = "legonnaryModeratorCache-v{timestamp}";
-let cacheCdnName = "legonnaryModeratorCdnCache-v0";
+let cacheCdnName = "legonnaryModeratorCdnCache-v1";
 
 let filesToCache = [
     './',
@@ -58,14 +58,20 @@ self.addEventListener('fetch', function(e) {
     console.log('[ServiceWorker] Fetch', e.request.url);
     if (cdnToCache.find((element)=>{return e.request.url.indexOf(element) === 0;})) {
         e.respondWith(
-            fetch(e.request)
-                .then(function(response) {
-                    return caches.open(cacheCdnName).then(function(cache) {
-                        cache.put(e.request.url, response.clone());
-                        console.log('[ServiceWorker] Fetched&Cached Data');
-                        return response;
-                    });
-                })
+            caches.match(e.request.url).then(function(response) {
+                if (response){
+                    return response
+                }else{
+                    return fetch(e.request)
+                            .then(function(response) {
+                                return caches.open(cacheCdnName).then(function(cache) {
+                                    cache.put(e.request.url, response.clone());
+                                    console.log('[ServiceWorker] Fetched&Cached Data');
+                                    return response;
+                                });
+                            })
+                }
+            })            
         );
     } else {
         e.respondWith(
