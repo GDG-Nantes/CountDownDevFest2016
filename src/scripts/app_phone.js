@@ -169,11 +169,12 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
     function draw() {
         let draw = snapshotFb[keys[index]];
         let imgSubmission = document.getElementById('imgSubmission');
+        let parentImg = imgSubmission.parentElement;
         imgSubmission.src = draw.dataUrl;
-        if (draw.accepted && !imgSubmission.classList.contains('accepted')) {
-            imgSubmission.classList.add('accepted');
+        if (draw.accepted && !parentImg.classList.contains('accepted')) {
+            parentImg.classList.add('accepted');
         } else {
-            imgSubmission.classList.remove('accepted');
+            parentImg.classList.remove('accepted');
         }
 
     }
