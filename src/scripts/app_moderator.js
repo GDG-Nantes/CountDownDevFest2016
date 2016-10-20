@@ -77,6 +77,16 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
              */
             fireBaseLego.database().ref(`draw/${currentKey}`).remove();
             fireBaseLego.database().ref("/drawValidated").push(currentDraw);
+            // We also save the state in the user tree
+            let dataUrl = legoCanvas.snapshot();
+            currentDraw.dataUrl = dataUrl;
+            currentDraw.accepted = true;
+            // We clean the draw before to save it
+            delete currentDraw.instructions;
+            fireBaseLego.database().ref(`/drawSaved/${currentDraw.userId}`).push(currentDraw);
+            // And finaly we place it into validated draws in order to see the draw in the restitution scren
+            delete currentDraw.userId;
+            fireBaseLego.database().ref("/drawShow").push(currentDraw);
             legoCanvas.resetBoard();
             getNextDraw();
         });
