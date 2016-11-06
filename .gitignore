@@ -10,3 +10,5 @@ public/
 
 .firebaserc
 bundle*
+
+yarn.lock
