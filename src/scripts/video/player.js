@@ -8,7 +8,7 @@ export class VideoPlayer{
     constructor(parentElt, callBackEnd){
         this.videoElt = document.createElement('video');
         parentElt.appendChild(this.videoElt);
-        this.videoName = '';        
+        this.videoName = 'intro-devfest-2016.mp4';        
         this.callBackEnd = callBackEnd;
     }
 
