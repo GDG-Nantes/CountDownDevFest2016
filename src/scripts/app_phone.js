@@ -173,7 +173,7 @@ import {LegoGridCanvas} from './canvas/legoCanvas.js';
         imgSubmission.src = draw.dataUrl;
         if (draw.accepted && !parentImg.classList.contains('accepted')) {
             parentImg.classList.add('accepted');
-        } else {
+        } else if (!draw.accepted){
             parentImg.classList.remove('accepted');
         }
 
