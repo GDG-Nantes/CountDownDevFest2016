@@ -50,19 +50,20 @@ export class LegoGridCanvas {
 
                 let newLeft = Math.round(options.target.left / this.cellSize) * this.cellSize;
                 let newTop = Math.round((options.target.top - this.headerHeight) / this.cellSize) * this.cellSize + this.headerHeight;                  
-                // We have to calculate the top
-                let topCompute = newTop + (peg.size.row === 2 || peg.angle > 0 ? this.cellSize * 2 : this.cellSize);
-                let leftCompute = newLeft + (peg.size.col === 2 ? this.cellSize * 2 : this.cellSize);
                 peg.move(
                     newLeft, //left
                     newTop // top
                 );
+                let leftCondition = peg.angle > 0 ? newLeft - this.cellSize : newLeft;
+                // We have to calculate the top
+                let topCompute = newTop + (peg.size.row === 2 || peg.angle > 0 ? this.cellSize * 2 : this.cellSize);
+                let leftCompute = leftCondition + (peg.size.col === 2 && peg.angle === 0 ? this.cellSize * 2 : this.cellSize); 
 
                 // We specify that we could remove a peg if one of it's edge touch the outside of the canvas
                 if (newTop < HEADER_HEIGHT
-                    || newLeft < 0
-                    || topCompute >= this.canvasElt.height
-                    || leftCompute >= this.canvasElt.width) {
+                    || leftCondition < 0
+                    || topCompute > this.canvasElt.clientHeight
+                    || leftCompute > this.canvasElt.clientWidth) {
                     peg.toRemove = true;
                 } else {
                     // Else we check we create a new peg (when a peg enter in the draw area)
