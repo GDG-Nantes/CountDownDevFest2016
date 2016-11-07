@@ -190,8 +190,11 @@ import {VideoPlayer} from './video/player.js';
 
     function endCountDown(){
         const opacityElt = document.getElementById('opacity');
-        opacityElt.classList.add('black');
-        setTimeout(()=>new VideoPlayer(opacityElt, ()=>console.log('end')).playVideo(), 4000);
+        opacity.style.display = '';
+        setTimeout(_=>{
+            opacityElt.classList.add('black');
+            setTimeout(()=>new VideoPlayer(opacityElt, ()=>console.log('end')).playVideo(), 4000);            
+        }, 100);
     }
 
     
