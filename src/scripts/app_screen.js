@@ -118,9 +118,9 @@ import {VideoPlayer} from './video/player.js';
         countDownParentElt = document.getElementById('count-down-text');
 
         // To remove if you want to use the target date define at the top of the class
-        targetDate = moment();
-        targetDate.add(30, 'minutes');
-        //targetDate.add(5, 'seconds');
+        targetDate = moment(), // The timeout date
+        //targetDate.add(30, 'minutes');
+        targetDate.add(5, 'seconds');
         // We start our text animation
         window.requestAnimationFrame(checkTime);
 
