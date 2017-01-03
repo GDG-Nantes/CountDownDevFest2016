@@ -146,16 +146,18 @@ export class LegoGridCanvas {
     drawInstructions(instructionObject){
         this.resetBoard();
         this.canvas.renderOnAddRemove = false;
-        instructionObject.instructions.forEach((instruction)=>{
-            this.canvas.add(
-                this._createBrick({ size : instruction.size, 
-                    left : (instruction.left / instruction.cellSize) * this.cellSize,
-                    top : (instruction.top / instruction.cellSize) * this.cellSize,
-                    angle : instruction.angle,
-                    color : instruction.color
-                }).canvasElt
-                );            
-        });
+        if (instructionObject.instructions){
+            instructionObject.instructions.forEach((instruction)=>{
+                this.canvas.add(
+                    this._createBrick({ size : instruction.size, 
+                        left : (instruction.left / instruction.cellSize) * this.cellSize,
+                        top : (instruction.top / instruction.cellSize) * this.cellSize,
+                        angle : instruction.angle,
+                        color : instruction.color
+                    }).canvasElt
+                    );            
+            });
+        }
 
         this.canvas.renderAll();
         this.canvas.renderOnAddRemove = true;
